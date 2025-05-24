@@ -51,6 +51,7 @@ const materialSchema: Schema<IMaterial> = new mongoose.Schema({
             type: [String]
         }
     }
+    
 })
 
 const Material: Model<IMaterial> = mongoose.models.Material as Model<IMaterial> || mongoose.model<IMaterial>('Material', materialSchema)
