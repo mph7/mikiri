@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Navbar from './Navbar'
 import Sidebar from './Sidebar'
 import { Outlet } from 'react-router-dom'
@@ -10,7 +10,7 @@ type Props = {}
 const Layout = ({ onLogout, user }: Props) => {
 
     const [materials, setMaterials] = useState([])
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
 
     const fetchMaterials = useCallback(async () => {
@@ -45,7 +45,7 @@ const Layout = ({ onLogout, user }: Props) => {
     // ERROR
     if (loading) return (
         <div className='min-h-screen bg-gray-50 flex items-center justify-center'>
-            <div className='animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 bg-purple-500'>
+            <div className='animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 bg-red-500'>
 
             </div>
         </div>
@@ -77,10 +77,10 @@ const Layout = ({ onLogout, user }: Props) => {
                     </div>
 
                     <div className='xl:col-span-1 space-y-4 sm:space-y-6'>
-                        <div className="bg-white rounded-xl p-4 sm:p-5 shadow-sm border border-purple-100 ">
+                        <div className="bg-white rounded-xl p-4 sm:p-5 shadow-sm border border-red-100 ">
                             <h3 className='text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-gray-800
                             flex items-center gap-2'>
-                                <TrendingUp className='w-4 h-4 sm:w-5 sm:h-5 text-purple-500' />
+                                <TrendingUp className='w-4 h-4 sm:w-5 sm:h-5 text-red-600' />
                             </h3>
                         </div>
                     </div>

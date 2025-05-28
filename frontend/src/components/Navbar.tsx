@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronDown, LogOut, Settings, Zap } from "lucide-react";
 
@@ -20,14 +20,14 @@ const Navbar = ({ user = {}, onLogout }) => {
                 {/* Logo */}
                 <div className="flex items-center gap-2 cursor-pointer group" onClick={() => navigate("/")}>
                     <div className="relative w-10 h-10 flex items-center justify-center rounded-xl bg-gradient-to-br 
-                    from-fuchsia-500 via-purple-500 to-indigo-500 shadow-lg group-hover:shadow-purple-300/50 
+                    from-red-500  to-red-700 shadow-lg group-hover:shadow-purple-300/50 
                     group-hover:scale-105 transition-all duration-300">
                         <Zap className="w-6 h-6 text-white" />
                         <div className="absolute -bottom-1 -middle-1 w-3 h-3 bg-white rounded-full shadow-mdanimate-ping" />
                     </div>
                     {/* NAME */}
-                    <span className="text-2xl font-extrabold bg-gradient-to-r from-fuchsia-500 via-purple-500
-                    to-indigo-500 bg-clip-text text-transparent tracking-wide">
+                    <span className="text-2xl font-extrabold bg-gradient-to-r from-red-500 
+                    to-red-700 bg-clip-text text-transparent tracking-wide">
                         Taskflow
                     </span>
                 </div>

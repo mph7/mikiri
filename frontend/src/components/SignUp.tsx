@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { Mail, User, UserPlus, Lock, Icon } from 'lucide-react'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 
 const API_URL = 'http://localhost:4000'
@@ -28,8 +28,9 @@ const SignUp = ({ onSubmit, onSwitchMode }) => {
         try {
             const { data } = await axios.post(`${API_URL}/api/user/register`, formData)
             console.log('Signup Successfull', data)
-            setMessage({ text: 'Registration successful!, you can now log in.', type: 'success' })
+            setMessage({ text: 'Registration successful!, redirecting...', type: 'success' })
             setFormData(INITIAL_FORM)
+            onSubmit(data)
         } catch (err) {
             console.error('Signup error', err)
             setMessage({ text: err.response?.data?.message || "An error occurred. Please try again later", type: 'error' })
@@ -50,7 +51,7 @@ const SignUp = ({ onSubmit, onSwitchMode }) => {
                 <h2 className='text-2xl font-bold text-gray-800'>
                     Create Account
                 </h2>
-                <p className="text-gray-500 text-sm mt-1">Join Hyperborea to read things</p>
+                <p className="text-gray-500 text-sm mt-1">Join Mikiri and start reading in Japanese</p>
             </div>
 
             {message.text && (
@@ -77,14 +78,13 @@ const SignUp = ({ onSubmit, onSwitchMode }) => {
                     {loading ? 'Signing Up...' : <><UserPlus className='w-4 h-4' />Sign Up</>}
                 </button>
             </form>
-            
+
             <p className='text-center text-sm text-gray-600 mt-6'>
                 Already have an account?{' '}
                 <button onClick={onSwitchMode} className='text-red-600 hover:text-red-700 hover:underline
                 font-medium transition-colors cursor-pointer'>
                     Login
                 </button>
-
             </p>
         </div>
     )
