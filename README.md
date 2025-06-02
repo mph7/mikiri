@@ -1,54 +1,101 @@
-# React + TypeScript + Vite
+# Mikiri (見切り) - Your Personal Space for Immersive Japanese Reading 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Mikiri** helps you cut through the noise and dive deep into Japanese texts. Our vision is to create a powerful, personalizable, and privacy-respecting platform that empowers Japanese language learners to engage with authentic content on their own terms.
 
-Currently, two official plugins are available:
+We believe in the power of immersion and "i+1" learning. Mikiri aims to be the best tool for you to read what *you* want, how *you* want, seamlessly integrating with your existing learning ecosystem.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Current Stage: Foundational MVP - The Clean Reader
 
-## Expanding the ESLint configuration
+Mikiri is currently in its foundational **Minimum Viable Product (MVP)** stage. This version is laser-focused on providing a **clean, simple, and efficient text reading experience**.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+The core idea of this MVP is to give you a dedicated space to import Japanese texts (plain text for now) and read them in a distraction-free environment. We've intentionally kept it lean, allowing you to leverage your favorite browser-based dictionary extensions (like Yomichan/Rikaichan) for vocabulary lookups, which many dedicated learners already use and love.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+While the backend infrastructure supports user accounts and text storage, the primary user-facing experience in this MVP is centered on straightforward text import and reading.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🚀 Core MVP Features
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+* **👤 User Accounts:** Secure registration and login to keep your reading materials private and accessible.
+* **➕ Simple Text Import:** Easily paste or type in any Japanese text you want to read.
+* **📖 Clean Reading Interface:** A minimalist, aesthetically pleasing environment designed for optimal Japanese text legibility.
+    * Focus on clear font rendering.
+    * Uncluttered UI to maximize immersion.
+* **🎨 Basic Customization:**
+    * Adjust text size for comfortable reading.
+    * Switch between Light and Dark themes.
+* **🧩 Browser Extension Ready:** Designed to work smoothly with popular pop-up dictionary browser extensions. Mikiri provides the text; your extension provides the instant lookups.
+* **📚 Personal Text Library:** Save your imported texts with titles to build your own reading collection.
+    * View your saved texts in an organized grid layout on your dashboard.
+    * Easily access or delete texts.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## 🛠️ Tech Stack
+
+[![Core Technologies](https://skillicons.dev/icons?i=react,ts,nodejs,tailwind,vite,mongodb,express)](https://skillicons.dev)
+
+Mikiri leverages a modern and robust technology stack:
+
+* **Frontend:**
+    * **React 19 & TypeScript:** For a dynamic and type-safe user interface.
+    * **Vite:** As the build tool and development server.
+    * **Tailwind CSS (v4):** For utility-first styling.
+* **Backend:**
+    * **Node.js & Express.js with TypeScript:** Powering the server-side logic.
+    * **MongoDB:** For data persistence, managed with Mongoose and hosted on MongoDB Atlas.
+    * **Authentication:** Secured using JWT and Bcrypt for password hashing.
+* **Development & CI/CD:**
+    * **XO:** For opinionated linting and code style enforcement.
+    * **GitHub Actions & DeepSource:** For continuous integration and advanced static code analysis, helping maintain code quality and security.
+
+## 🔮 Future Vision: The "Gray Area Content Facilitator"
+
+While the MVP is a simple reader, the long-term vision for Mikiri is ambitious, drawing inspiration from the idea of a **"Facilitator of User-Curated Content"**. We want to empower you to bring *your own* content, in various formats, and use Mikiri's powerful tools to enhance your learning.
+
+Future enhancements we're excited about include:
+
+* **📚 ePub Importer:** Upload and read your legally acquired Japanese ePubs (Light Novels, books, etc.) directly within Mikiri, with chapter navigation and a great reading experience.
+* **🧠 Known Words & Coverage Analysis:**
+    * Allow users to import their list of known words (e.g., from a JSON file).
+    * Analyze user-uploaded texts to calculate vocabulary coverage ("i+1" insights).
+    * Visually highlight unknown words within the reader.
+    * Recommend texts from the user's *own library* that are at their optimal learning level.
+* **🔗 Enhanced Content Integration:**
+    * RSS Feed aggregation for news and blogs.
+    * "Read-it-later" style functionality for web articles (respecting site TOS).
+* **✍️ Annotation & Note-Taking Tools:** Directly within your texts.
+* **🎧 Audio Integration:** Options for Text-to-Speech or even syncing user-provided audio with texts.
+
+The core principle will always be **user agency and privacy**. Mikiri will provide the tools; *you* provide the content you have the right to use.
+
+## 🏁 Getting Started
+
+To get Mikiri up and running on your local machine, follow these steps:
+
+**Prerequisites:**
+*   Node.js (v18 or later recommended)
+*   npm (comes with Node.js)
+*   Git
+
+1.  **Clone the Repository:**
+    ```bash
+    git clone https://github.com/mph7/mikiri.git
+    cd mikiri
+    ```
+
+2.  **Set up the Backend:**
+    ```bash
+    cd backend
+    npm install
+    # Set up your .env file with DB_USERNAME, DB_PASSWORD, JWT_SECRET
+    npm start
+    ```
+    The backend server will start, typically on port 4000.
+
+2.  **Frontend:**
+    ```bash
+    cd frontend
+    npm install
+    npm run dev
+    ```
+    The frontend development server will start, usually on port 5173.
+
+
+Let's make Japanese reading more accessible and enjoyable, together!
