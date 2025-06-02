@@ -1,0 +1,16 @@
+{
+  "name": "mikiri",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "xo": "^0.59.0"
+  },
+  "scripts": {
+    "lint": "xo"
+  }
+}
