@@ -1,0 +1,16 @@
+{
+    // Enable all of these plugins (which are enabled by default):
+    "plugins": [
+        "react",
+        "unicorn",
+        "typescript",
+        "oxc",
+        "react-perf",
+        "import",
+        "jsdoc",
+        "jsx-a11y",
+        "node",
+        "promise",
+        "vitest"
+    ]
+}

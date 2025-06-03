@@ -1,4 +1,4 @@
-import Material from "../models/materialModel";
+import Material from "../models/materialModel.js";
 
 // Create new material
 export async function createMaterial(req, res) {

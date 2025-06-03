@@ -1,6 +1,6 @@
 import express from "express";
-import authMiddleware from "../middleware/auth";
-import { createMaterial, deleteMaterial, getMaterialByID, getMaterials, updateMaterial } from "../controllers/materialController";
+import authMiddleware from "../middleware/auth.js";
+import { createMaterial, deleteMaterial, getMaterialByID, getMaterials, updateMaterial } from "../controllers/materialController.js";
 
 const materialRouter = express.Router()
 
