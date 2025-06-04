@@ -5,7 +5,16 @@ import { Outlet } from "react-router-dom";
 import axios from "axios";
 import { TrendingUp } from "lucide-react";
 
-const Layout = ({ onLogout, user }) => {
+type LayoutProps = {
+    onLogout: () => void;
+    user: {
+        email: string;
+        name: string;
+        avatar: string;
+    } | null;
+};
+
+const Layout = ({ onLogout, user }: LayoutProps) => {
     const [materials, setMaterials] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);

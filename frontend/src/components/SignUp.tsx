@@ -5,7 +5,22 @@ import { useState } from "react";
 const API_URL = "http://localhost:4000";
 const INITIAL_FORM = { name: "", email: "", password: "" };
 
-const SignUp = ({ onSubmit, onSwitchMode }) => {
+type dataType = {
+    success: boolean;
+    message?: string;
+    user?: {
+        id: string;
+        name: string;
+        email: string;
+    };
+};
+
+type SignUpProps = {
+    onSubmit: () => void;
+    onSwitchMode: (data: dataType) => void;
+};
+
+const SignUp = ({ onSubmit, onSwitchMode }: SignUpProps) => {
     const [formData, setFormData] = useState(INITIAL_FORM);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState({ text: "", type: "" });

@@ -1,8 +1,14 @@
 import React from "react";
 
-type Props = {};
+type SidebarProps = {
+    user: {
+        email: string;
+        name: string;
+        avatar: string;
+    } | null;
+};
 
-function Sidebar({ user }: Props) {
+function Sidebar({ user }: SidebarProps) {
     return <div>Sidebar</div>;
 }
 
