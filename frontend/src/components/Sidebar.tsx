@@ -1,11 +1,9 @@
-import React from 'react'
+import React from "react";
 
-type Props = {}
+type Props = {};
 
 function Sidebar({ user }: Props) {
-    return (
-        <div>Sidebar</div>
-    )
+    return <div>Sidebar</div>;
 }
 
-export default Sidebar
+export default Sidebar;
