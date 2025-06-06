@@ -1,7 +1,7 @@
 import User from "../models/userModel.js";
-import { isEmail } from "validator";
+import validator from "validator";
 import { compare, hash } from "bcrypt";
-import { sign } from "jsonwebtoken";
+import jsonwebtoken from "jsonwebtoken";
 import { Request, Response } from "express";
 import { AuthResponse, GetCurrentUserResponse, UpdatePasswordResponse, UpdateProfileResponse } from "@mikiri/types";
 import { Document, Types } from "mongoose";
@@ -10,9 +10,11 @@ import { AuthenticatedRequest } from "../middleware/auth.js";
 const JWT_SECRET = process.env.JWT_SECRET;
 if (!JWT_SECRET) {
     console.error("FATAL ERROR: JWT_SECRET is not defined in environment variables.");
-    process.exit(1);
 }
 const TOKEN_EXPIRES = "24h";
+
+const { isEmail } = validator;
+const { sign } = jsonwebtoken;
 
 const createToken = (userId: string) => sign({ id: userId }, JWT_SECRET, { expiresIn: TOKEN_EXPIRES });
 

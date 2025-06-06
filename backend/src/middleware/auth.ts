@@ -1,9 +1,11 @@
-import { verify, JwtPayload } from "jsonwebtoken";
+import jsonwebtoken, { JwtPayload } from "jsonwebtoken";
 import User from "../models/userModel.js";
 import { NextFunction, Request, Response } from "express";
-import { ParamsDictionary, Query } from "express-serve-static-core"; // Importar tipos para genéricos
+import { ParamsDictionary, Query } from "express-serve-static-core";
 import { User as SharedUser } from "@mikiri/types";
 import { Types } from "mongoose";
+
+const { verify } = jsonwebtoken;
 
 const jwtSecretFromEnv = process.env.JWT_SECRET;
 if (!jwtSecretFromEnv) {
@@ -28,7 +30,11 @@ interface UserDocumentFromDb {
     email: string;
 }
 
-export default async function authMiddleware(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
+export default async function authMiddleware(
+    req: AuthenticatedRequest,
+    res: Response,
+    next: NextFunction,
+): Promise<void> {
     const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
         res.status(401).json({ success: false, message: "Not Authorized, token missing." });
@@ -39,8 +45,8 @@ export default async function authMiddleware(req: AuthenticatedRequest, res: Res
 
     try {
         const payload = verify(token, JWT_SECRET) as JwtPayload;
-        
-        const userDoc = await User.findById(payload.id).select("-password") as UserDocumentFromDb | null;
+
+        const userDoc = (await User.findById(payload.id).select("-password")) as UserDocumentFromDb | null;
 
         if (!userDoc) {
             res.status(401).json({ success: false, message: "User not found." });

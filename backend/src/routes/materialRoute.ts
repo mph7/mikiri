@@ -1,16 +1,21 @@
-import express from "express";
+import { Router } from "express";
 import authMiddleware from "../middleware/auth.js";
-import { createMaterial, deleteMaterial, getMaterialByID, getMaterials, updateMaterial } from "../controllers/materialController.js";
+import {
+    createMaterial,
+    deleteMaterial,
+    getMaterialByID,
+    getMaterials,
+    updateMaterial,
+} from "../controllers/materialController.js";
 
-const materialRouter = express.Router()
+const materialRouter = Router();
 
-materialRouter.route('/mt')
-    .get(authMiddleware, getMaterials)
-    .post(authMiddleware, createMaterial)
+materialRouter.route("/mt").get(authMiddleware, getMaterials).post(authMiddleware, createMaterial);
 
-materialRouter.route('/:id/mt')
+materialRouter
+    .route("/:id")
     .get(authMiddleware, getMaterialByID)
     .put(authMiddleware, updateMaterial)
-    .delete(authMiddleware, deleteMaterial)
+    .delete(authMiddleware, deleteMaterial);
 
-export default materialRouter
+export default materialRouter;
