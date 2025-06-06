@@ -14,10 +14,36 @@ type LayoutProps = {
     } | null;
 };
 
+interface Material {
+    title: string;
+    content: string;
+    url: string;
+    source: string;
+    type: string;
+    postedAt: Date;
+    metadata: {
+        difficulty: string;
+        length: number;
+        tags: string[];
+    };
+}
+
+interface MaterialsSuccessResponse {
+    success: true;
+    materials?: Material[];
+}
+
+interface MaterialsErrorResponse {
+    success: false;
+    message: string;
+}
+
+type MaterialsApiResponse = MaterialsSuccessResponse | MaterialsErrorResponse;
+
 const Layout = ({ onLogout, user }: LayoutProps) => {
-    const [materials, setMaterials] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [materials, setMaterials] = useState<Material[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string | null>(null);
 
     const fetchMaterials = useCallback(async () => {
         setLoading(true);
@@ -27,7 +53,7 @@ const Layout = ({ onLogout, user }: LayoutProps) => {
             const token = localStorage.getItem("token");
             if (!token) throw new Error("No auth token found");
 
-            const { data } = await axios.get("http://localhost:4000/api/materials/mt", {
+            const { data } = await axios.get<MaterialsApiResponse>("http://localhost:4000/api/materials/mt", {
                 headers: { Authorization: `Bearer ${token}` },
             });
 

@@ -28,7 +28,7 @@ export async function getMaterials(req, res) {
     // TODO: implement filtering
     try {
         const materials = await Material.find().sort({ postedAt: -1 })
-        return res.status(200).json({ success: true, materials: materials })
+        return res.status(200).json({ success: true, materials })
     } catch (err) {
         console.log(err);
         return res.status(500).json({ success: false, message: err.message })

@@ -1,137 +1,242 @@
 import User from "../models/userModel.js";
-import validator from 'validator'
-import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
+import { isEmail } from "validator";
+import { compare, hash } from "bcrypt";
+import { sign } from "jsonwebtoken";
+import { Request, Response } from "express";
+import { AuthResponse, GetCurrentUserResponse, UpdatePasswordResponse, UpdateProfileResponse } from "@mikiri/types";
+import { Document, Types } from "mongoose";
+import { AuthenticatedRequest } from "../middleware/auth.js";
 
-const JWT_SECRET = process.env.JWT_SECRET
-const TOKEN_EXPIRES = '24h'
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) {
+    console.error("FATAL ERROR: JWT_SECRET is not defined in environment variables.");
+    process.exit(1);
+}
+const TOKEN_EXPIRES = "24h";
 
-const createToken = (userId) => jwt.sign({ id: userId }, JWT_SECRET, { expiresIn: TOKEN_EXPIRES })
+const createToken = (userId: string) => sign({ id: userId }, JWT_SECRET, { expiresIn: TOKEN_EXPIRES });
 
-export async function registerUser(req, res) {
+interface UserDocument extends Document {
+    _id: Types.ObjectId;
+    name: string;
+    email: string;
+    password?: string;
+}
+
+interface RegisterUserPayload {
+    name: string;
+    email: string;
+    password: string;
+}
+
+export async function registerUser(
+    req: Request<Record<string, never>, Record<string, never>, RegisterUserPayload>,
+    res: Response<AuthResponse>,
+): Promise<void> {
     const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
-        return res.status(400).json({ success: false, message: "All fields are required." })
+        res.status(400).json({ success: false, message: "All fields are required." });
+        return;
     }
-    if (!validator.isEmail(email)) {
-        return res.status(400).json({ success: false, message: "Invalid email." })
+    if (!isEmail(email)) {
+        res.status(400).json({ success: false, message: "Invalid email." });
+        return;
     }
     if (password.length < 8) {
-        return res.status(400).json({ success: false, message: "Password must be at least 8 characters long." })
+        res.status(400).json({ success: false, message: "Password must be at least 8 characters long." });
+        return;
     }
 
     try {
         if (await User.findOne({ email })) {
-            return res.status(409).json({ success: false, message: "User already exists." })
+            res.status(409).json({ success: false, message: "User already exists." });
+            return;
         }
 
-        const hashed = await bcrypt.hash(password, 10)
-        const user = await User.create({ name, email, password: hashed })
-        const token = createToken(user._id)
+        const hashed = await hash(password, 10);
+        const user: UserDocument = (await User.create({ name, email, password: hashed })) as UserDocument;
+        const token = createToken(user._id.toString());
 
-        return res.status(201).json({ success: true, token, user: { id: user._id, name: user.name, email: user.email } })
-    }
-
-    catch (err) {
+        res.status(201).json({
+            success: true,
+            token,
+            user: { id: user._id.toString(), name: user.name, email: user.email },
+        });
+        return;
+    } catch (err) {
         console.log(err);
-        return res.status(500).json({ success: false, message: "Server error." })
+        res.status(500).json({ success: false, message: "Server error." });
+        return;
     }
 }
 
-export async function loginUser(req, res) {
-    const { email, password } = req.body
+interface LoginUserPayload {
+    email: string;
+    password: string;
+}
+
+export async function loginUser(
+    req: Request<Record<string, never>, Record<string, never>, LoginUserPayload>,
+    res: Response<AuthResponse>,
+): Promise<void> {
+    const { email, password } = req.body;
     if (!email || !password) {
-        return res.status(400).json({ success: false, message: "Email and password are required." })
+        res.status(400).json({ success: false, message: "Email and password are required." });
+        return;
     }
 
     try {
-        const user = await User.findOne({ email })
+        const user = (await User.findOne({ email })) as UserDocument | null;
         if (!user) {
-            return res.status(401).json({ success: false, message: "Invalid credentials." })
+            res.status(401).json({ success: false, message: "Invalid credentials." });
+            return;
         }
-        const match = await bcrypt.compare(password, user.password)
+        if (!user.password) {
+            console.error(`Password not found for user: ${user.email}`);
+            res.status(500).json({ success: false, message: "Error processing login." });
+            return;
+        }
+        const match = await compare(password, user.password);
 
         if (!match) {
-            return res.status(401).json({ success: false, message: "Invalid credentials." })
+            res.status(401).json({ success: false, message: "Invalid credentials." });
+            return;
         }
 
-        const token = createToken(user._id)
-        return res.json({ success: true, token, user: { id: user._id, name: user.name, email: user.email } })
-    }
-    catch (err) {
-        console.log(err);
-        return res.status(500).json({ success: false, message: "Server error." })
-    }
-}
-
-export async function getCurrentUser(req, res) {
-    try {
-        const user = (await User.findById(req.body.id)).isSelected('name email')
-        if (!user) {
-            return res.status(400).json({ success: false, message: 'User not found.' })
-        }
-        return res.json({ success: true, user })
+        const token = createToken(user._id.toString());
+        res.json({ success: true, token, user: { id: user._id.toString(), name: user.name, email: user.email } });
+        return;
     } catch (err) {
         console.log(err);
-        return res.status(500).json({ success: false, message: "Server error." })
+        res.status(500).json({ success: false, message: "Server error." });
+        return;
     }
 }
 
-export async function updateProfile(req, res) {
-    const { name, email } = req.body
+interface GetCurrentUserPayload {
+    id: string;
+}
 
-    if (!name || !email || !validator.isEmail(email)) {
-        return res.status(400).json({ success: false, message: "Valid name and email required." })
+export async function getCurrentUser(
+    req: AuthenticatedRequest<Record<string, never>, Record<string, never>, GetCurrentUserPayload>,
+    res: Response<GetCurrentUserResponse>,
+): Promise<void> {
+    try {
+        if (!req.user || !req.user.id) {
+            res.status(401).json({ success: false, message: "User not authenticated." });
+            return;
+        }
+        const userDoc = (await User.findById(req.user.id).select("name email _id")) as UserDocument | null;
+        if (!userDoc) {
+            res.status(404).json({ success: false, message: "User not found." }); // 404 is more appropriate
+            return;
+        }
+        res.json({ success: true, user: { id: userDoc._id.toString(), name: userDoc.name, email: userDoc.email } });
+        return;
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ success: false, message: "Server error." });
+        return;
+    }
+}
+
+interface UpdateProfilePayload {
+    name: string;
+    email: string;
+}
+
+export async function updateProfile(
+    req: AuthenticatedRequest<Record<string, never>, Record<string, never>, UpdateProfilePayload>,
+    res: Response<UpdateProfileResponse>,
+): Promise<void> {
+    const { name, email } = req.body;
+
+    if (!name || !email || !isEmail(email)) {
+        res.status(400).json({ success: false, message: "Valid name and email are required." });
+        return;
+    }
+    if (!req.user || !req.user.id) {
+        res.status(401).json({ success: false, message: "User not authenticated." });
+        return;
     }
 
     try {
-        const exists = await User.findOne({ email, _id: { $ne: req.user.id } });
+        const userId = req.user.id;
+        const exists = await User.findOne({ email, _id: { $ne: userId } });
 
         if (exists) {
-            res.status(409).json({ success: false, message: "Email already in use by another account." })
+            res.status(409).json({ success: false, message: "Email already in use by another account." });
+            return;
         }
-        const user = await User.findByIdAndUpdate(
-            req.user._id,
+        const updatedUserDoc = (await User.findByIdAndUpdate(
+            userId,
             { name, email },
-            { new: true, runValidators: true, select: "name email" })
+            { new: true, runValidators: true, select: "name email _id" }, // select _id for response mapping
+        )) as UserDocument | null;
 
-        return res.json({ success: true, user })
+        if (!updatedUserDoc) {
+            res.status(404).json({ success: false, message: "User not found for update." });
+            return;
+        }
+        res.json({
+            success: true,
+            user: { id: updatedUserDoc._id.toString(), name: updatedUserDoc.name, email: updatedUserDoc.email },
+        });
+        return;
     } catch (err) {
         console.log(err);
-        return res.status(500).json({ success: false, message: "Server error." })
+        res.status(500).json({ success: false, message: "Server error." });
+        return;
     }
 }
 
-export async function updatePassword(req, res) {
+interface UpdatePasswordPayload {
+    currentPassword: string;
+    newPassword: string;
+}
+
+export async function updatePassword(
+    req: AuthenticatedRequest<Record<string, never>, Record<string, never>, UpdatePasswordPayload>, // Use AuthenticatedRequest
+    res: Response<UpdatePasswordResponse>,
+): Promise<void> {
     const { currentPassword, newPassword } = req.body;
 
     if (!currentPassword || !newPassword || newPassword.length < 8) {
-        return res.status(400).json({ success: false, message: 'Password Invalid.' })
+        res.status(400).json({
+            success: false,
+            message: "Current password and new password (min 8 chars) are required.",
+        });
+        return;
     }
-    if (newPassword.length < 8) {
-        return res.status(400).json({ success: false, message: 'Password too short.' })
+
+    if (!req.user || !req.user.id) {
+        res.status(401).json({ success: false, message: "User not authenticated." });
+        return;
     }
 
     try {
-        const user = await User.findById(req.user.id).select("password")
+        const userDoc = (await User.findById(req.user.id).select("+password")) as UserDocument | null; // Explicitly select password
 
-        if (!user) {
-            return res.status(404).json({ success: false, message: 'User not found.' })
+        if (!userDoc || !userDoc.password) {
+            res.status(404).json({ success: false, message: "User not found or password not available." });
+            return;
         }
 
-        const match = await bcrypt.compare(currentPassword, user.password)
+        const match = await compare(currentPassword, userDoc.password);
 
         if (!match) {
-            return res.status(401).json({ success: false, message: "Current password incorrect" })
+            res.status(401).json({ success: false, message: "Current password incorrect." });
+            return;
         }
 
-        user.password = await bcrypt.hash(newPassword, 10)
-        await user.save()
-        return res.json({ success: true, message: 'Password changed' })
-
+        userDoc.password = await hash(newPassword, 10);
+        await userDoc.save();
+        res.json({ success: true, message: "Password changed." });
+        return;
     } catch (err) {
         console.log(err);
-        return res.status(500).json({ success: false, message: "Server error." })
+        res.status(500).json({ success: false, message: "Server error." });
+        return;
     }
 }
