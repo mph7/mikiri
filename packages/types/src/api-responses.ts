@@ -1,11 +1,11 @@
-import { User } from "./models";
+import { Material, User } from "./models";
 
-// UserController
 interface ResponseFail {
     success: false;
     message: string;
 }
 
+// UserController
 interface AuthResponseSuccess {
     success: true;
     token: string;
@@ -26,3 +26,7 @@ export type UpdateProfileResponse = { success: true; user: Pick<User, "id" | "na
 export type UpdatePasswordResponse = { success: true; message: "Password changed." } | ResponseFail;
 
 // Material Controller
+
+export type MaterialResponse = { success: true; material: Material } | ResponseFail;
+export type MaterialsResponse = { success: true; materials: Material[] } | ResponseFail;
+export type DeleteMaterialResponse = { success: true; message: "Material deleted." } | ResponseFail;

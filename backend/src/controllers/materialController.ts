@@ -1,13 +1,27 @@
 import { Request, Response } from "express";
 import Material from "../models/materialModel.js";
-import { Material as SharedMaterial } from "@mikiri/types";
+import { DeleteMaterialResponse, MaterialResponse, MaterialsResponse, Material as SharedMaterial } from "@mikiri/types";
+import {} from "mongoose";
+
+function convertToMaterialResponse(materialDoc: any): SharedMaterial {
+    return {
+        _id: (materialDoc._id as any).toString(),
+        title: materialDoc.title,
+        content: materialDoc.content,
+        url: materialDoc.url,
+        source: materialDoc.source,
+        type: materialDoc.type,
+        postedAt: materialDoc.postedAt,
+        metadata: materialDoc.metadata,
+    };
+}
 
 type createMaterialPayload = Omit<SharedMaterial, "id" | "_id">;
 
 // Create new material
 export async function createMaterial(
     req: Request<Record<string, never>, Record<string, never>, createMaterialPayload>,
-    res: Response,
+    res: Response<MaterialResponse>,
 ): Promise<void> {
     try {
         const { title, content, url, source, type, postedAt, metadata } = req.body;
@@ -23,9 +37,9 @@ export async function createMaterial(
         });
 
         const saved = await material.save();
-        res.status(201).json({ success: true, material: saved });
+        res.status(201).json({ success: true, material: convertToMaterialResponse(saved) });
         return;
-    } catch (err) {
+    } catch (err: any) {
         console.log(err);
         res.status(400).json({ success: false, message: err.message });
         return;
@@ -33,26 +47,28 @@ export async function createMaterial(
 }
 
 // Get all material
-export async function getMaterials(
-    req: Request<Record<string, never>, Record<string, never>, SharedMaterial>,
-    res: Response,
-): Promise<void> {
+export async function getMaterials(req: Request, res: Response<MaterialsResponse>): Promise<void> {
     // TODO: implement filtering
     try {
         const materials = await Material.find().sort({ postedAt: -1 });
-        res.status(200).json({ success: true, materials });
+        const mappedMaterials: SharedMaterial[] = materials.map((material) => convertToMaterialResponse(material));
+        res.status(200).json({ success: true, materials: mappedMaterials });
         return;
-    } catch (err) {
+    } catch (err: any) {
         console.log(err);
         res.status(500).json({ success: false, message: err.message });
         return;
     }
 }
 
+interface MaterialIDParams {
+    id: string;
+}
+
 // Get single material by ID
 export async function getMaterialByID(
-    req: Request<Record<string, never>, Record<string, never>, SharedMaterial>,
-    res: Response,
+    req: Request<MaterialIDParams, Record<string, never>, SharedMaterial>,
+    res: Response<MaterialResponse>,
 ): Promise<void> {
     try {
         const material = await Material.findOne({ _id: req.params.id });
@@ -61,9 +77,9 @@ export async function getMaterialByID(
             return;
         }
 
-        res.status(200).json({ success: true, material });
+        res.status(200).json({ success: true, material: convertToMaterialResponse(material) });
         return;
-    } catch (err) {
+    } catch (err: any) {
         console.log(err);
         res.status(500).json({ success: false, message: err.message });
         return;
@@ -72,8 +88,8 @@ export async function getMaterialByID(
 
 // Update material
 export async function updateMaterial(
-    req: Request<Record<string, never>, Record<string, never>, SharedMaterial>,
-    res: Response,
+    req: Request<MaterialIDParams, Record<string, never>, SharedMaterial>,
+    res: Response<MaterialResponse>,
 ): Promise<void> {
     try {
         const data = { ...req.body };
@@ -86,31 +102,30 @@ export async function updateMaterial(
             return;
         }
 
-        res.status(200).json({ success: true, material: updated });
+        res.status(200).json({ success: true, material: convertToMaterialResponse(updated) });
         return;
-    } catch (err) {
+    } catch (err: any) {
         console.log(err);
         res.status(400).json({ success: false, message: err.message });
         return;
     }
 }
 
-interface deleteMaterialParams {
-    id: string;
-}
-
 // Delete material
-export async function deleteMaterial(req: Request<deleteMaterialParams>, res: Response): Promise<void> {
+export async function deleteMaterial(
+    req: Request<MaterialIDParams>,
+    res: Response<DeleteMaterialResponse>,
+): Promise<void> {
     try {
         const deleted = await Material.findOneAndDelete({ _id: req.params.id });
         if (!deleted) {
-            res.status(404).json({ success: false, message: "Material not found" });
+            res.status(404).json({ success: false, message: "Material not found." });
             return;
         }
 
-        res.json(200).json({ success: true, message: "Task deleted" });
+        res.status(200).json({ success: true, message: "Material deleted." });
         return;
-    } catch (err) {
+    } catch (err: any) {
         console.log(err);
         res.status(500).json({ success: false, message: err.message });
         return;
