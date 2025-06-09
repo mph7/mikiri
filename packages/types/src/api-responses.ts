@@ -1,4 +1,4 @@
-import { Material, User } from "./models";
+import { type Material, type User } from "./models";
 
 interface ResponseFail {
     success: false;

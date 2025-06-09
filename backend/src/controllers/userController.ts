@@ -10,6 +10,7 @@ import { AuthenticatedRequest } from "../middleware/auth.js";
 const JWT_SECRET = process.env.JWT_SECRET;
 if (!JWT_SECRET) {
     console.error("FATAL ERROR: JWT_SECRET is not defined in environment variables.");
+    throw new Error("JWT_SECRET is not defined. The application cannot securely sign tokens.");
 }
 const TOKEN_EXPIRES = "24h";
 

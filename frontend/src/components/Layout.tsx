@@ -1,50 +1,21 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, type ReactNode } from "react";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import { Outlet } from "react-router-dom";
 import axios from "axios";
 import { TrendingUp } from "lucide-react";
+import type { MaterialsResponse, Material, User } from "@mikiri/types";
 
 type LayoutProps = {
     onLogout: () => void;
-    user: {
-        email: string;
-        name: string;
-        avatar: string;
-    } | null;
+    user: User | null;
+    children: ReactNode;
 };
 
-interface Material {
-    title: string;
-    content: string;
-    url: string;
-    source: string;
-    type: string;
-    postedAt: Date;
-    metadata: {
-        difficulty: string;
-        length: number;
-        tags: string[];
-    };
-}
-
-interface MaterialsSuccessResponse {
-    success: true;
-    materials?: Material[];
-}
-
-interface MaterialsErrorResponse {
-    success: false;
-    message: string;
-}
-
-type MaterialsApiResponse = MaterialsSuccessResponse | MaterialsErrorResponse;
-
 const Layout = ({ onLogout, user }: LayoutProps) => {
-    const [materials, setMaterials] = useState<Material[]>([]);
+    const [materials, setMaterials] = useState<Material[]>([]); // Deveria ser ImportedMaterial[]
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
-
     const fetchMaterials = useCallback(async () => {
         setLoading(true);
         setError(null);
@@ -53,19 +24,14 @@ const Layout = ({ onLogout, user }: LayoutProps) => {
             const token = localStorage.getItem("token");
             if (!token) throw new Error("No auth token found");
 
-            const { data } = await axios.get<MaterialsApiResponse>("http://localhost:4000/api/materials/mt", {
+            const { data } = await axios.get<MaterialsResponse>("http://localhost:4000/api/materials/", {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
-            const arr = Array.isArray(data)
-                ? data
-                : Array.isArray(data?.materials)
-                  ? data.materials
-                  : Array.isArray(data?.data)
-                    ? data.data
-                    : [];
+            const arr = data.success === true ? data.materials : [];
+
             setMaterials(arr);
-        } catch (err) {
+        } catch (err: any) {
             console.error(err);
             setError(err.message || "Could not load materials");
             if (err.response?.status === 401) onLogout();
@@ -73,7 +39,6 @@ const Layout = ({ onLogout, user }: LayoutProps) => {
             setLoading(false);
         }
     }, [onLogout]);
-
     useEffect(() => {
         fetchMaterials();
     }, [fetchMaterials]);
@@ -105,9 +70,8 @@ const Layout = ({ onLogout, user }: LayoutProps) => {
 
     return (
         <div className="min-h-screen bg-gray-50">
-            <Navbar user={user} onLogout={onLogout} />
+            {user && <Navbar user={user} onLogout={onLogout} />}
             <Sidebar user={user} />
-
             <div className="ml-0 xl:ml-64 lg:ml-64 md:ml-16 pt-16 p-3 sm:p-4 md:p-4 transition-all duration-300">
                 <div className="grid grid-cols-1 xl:grid-cols-3 sm: gap-6">
                     <div className="xl:col-span-2 space-y-3 sm:space-y-4 sm">

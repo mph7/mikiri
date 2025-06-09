@@ -1,11 +1,7 @@
-import React from "react";
+import type { User } from "@mikiri/types";
 
 type SidebarProps = {
-    user: {
-        email: string;
-        name: string;
-        avatar: string;
-    } | null;
+    user: User | null;
 };
 
 function Sidebar({ user }: SidebarProps) {

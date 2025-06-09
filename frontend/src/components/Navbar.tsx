@@ -1,19 +1,16 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronDown, LogOut, Settings, Zap } from "lucide-react";
+import type { User } from "@mikiri/types";
 
 type NavbarProps = {
-    user: {
-        email: string;
-        name: string;
-        avatar: string;
-    } | null;
+    user: User;
     onLogout: () => void;
 };
 
 const Navbar = ({ user, onLogout }: NavbarProps) => {
-    const menuref = useRef(null);
-    const [menuOpen, setMenuOpen] = useState(false);
+    const menuref = useRef<HTMLDivElement | null>(null);
+    const [menuOpen, setMenuOpen] = useState<boolean>(false);
     const navigate = useNavigate();
 
     const handleMenuToggle = () => setMenuOpen((prev) => !prev);

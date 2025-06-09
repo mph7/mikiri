@@ -1,49 +1,71 @@
+import type { AuthResponse, User as SharedUser } from "@mikiri/types";
 import axios from "axios";
-import { Mail, User, UserPlus, Lock, Icon } from "lucide-react";
+import { Mail, User, UserPlus, Lock, type LucideIcon } from "lucide-react";
 import { useState } from "react";
 
 const API_URL = "http://localhost:4000";
 const INITIAL_FORM = { name: "", email: "", password: "" };
 
-type dataType = {
-    success: boolean;
-    message?: string;
-    user?: {
-        id: string;
-        name: string;
-        email: string;
-    };
+type FormType = {
+    name: string;
+    email: string;
+    password: string;
+};
+
+type MessageType = {
+    text: string;
+    type: "success" | "error" | "";
 };
 
 type SignUpProps = {
-    onSubmit: () => void;
-    onSwitchMode: (data: dataType) => void;
+    onSubmit: (data: { token: string; user?: SharedUser }) => void;
+    onSwitchMode: () => void;
 };
 
 const SignUp = ({ onSubmit, onSwitchMode }: SignUpProps) => {
-    const [formData, setFormData] = useState(INITIAL_FORM);
-    const [loading, setLoading] = useState(false);
-    const [message, setMessage] = useState({ text: "", type: "" });
+    const [formData, setFormData] = useState<FormType>(INITIAL_FORM);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [message, setMessage] = useState<MessageType>({ text: "", type: "" });
     const MESSAGE_SUCCESS = "bg-green-50 text-green-600 p-3 rounded-lg text-sm mb-4 border border-green-100";
     const MESSAGE_ERROR = "bg-red-50 text-red-600 p-3 rounded-lg text-sm mb-4 border border-red-100";
-    const FIELDS = [
+
+    interface FieldConfig {
+        name: keyof FormType;
+        type: "text" | "email" | "password";
+        placeholder: string;
+        icon: LucideIcon;
+    }
+    const FIELDS: FieldConfig[] = [
         { name: "name", type: "text", placeholder: "Name", icon: User },
         { name: "email", type: "email", placeholder: "Email", icon: Mail },
         { name: "password", type: "password", placeholder: "Password", icon: Lock },
     ];
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
         setMessage({ text: "", type: "" });
 
         try {
-            const { data } = await axios.post(`${API_URL}/api/user/register`, formData);
-            console.log("Signup Successfull", data);
-            setMessage({ text: "Registration successful!, redirecting...", type: "success" });
-            setFormData(INITIAL_FORM);
-            onSubmit(data);
-        } catch (err) {
+            const { data } = await axios.post<AuthResponse>(`${API_URL}/api/user/register`, formData);
+            if ("token" in data) {
+                console.log("Signup Successfull", data);
+                setMessage({ text: "Registration successful!, redirecting...", type: "success" });
+                setFormData(INITIAL_FORM);
+                onSubmit({
+                    token: data.token,
+                    user: {
+                        ...data.user,
+                        avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(data.user?.name || "User")}&background=random`,
+                    },
+                });
+            } else {
+                setMessage({
+                    text: data.message || "An error occurred. Please try again later",
+                    type: "error",
+                });
+            }
+        } catch (err: any) {
             console.error("Signup error", err);
             setMessage({
                 text: err.response?.data?.message || "An error occurred. Please try again later",

@@ -10,7 +10,7 @@ import {
 
 const materialRouter = Router();
 
-materialRouter.route("/mt").get(authMiddleware, getMaterials).post(authMiddleware, createMaterial);
+materialRouter.route("/").get(authMiddleware, getMaterials).post(authMiddleware, createMaterial);
 
 materialRouter
     .route("/:id")

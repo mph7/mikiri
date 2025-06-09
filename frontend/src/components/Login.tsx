@@ -1,23 +1,16 @@
+import type { User } from "@mikiri/types";
 import axios from "axios";
-import { Mail, Lock, LogIn as LogInIcon, EyeOff, Eye } from "lucide-react";
+import { Mail, Lock, LogIn as LogInIcon, EyeOff, Eye, type LucideIcon } from "lucide-react";
 import { useState } from "react";
+
 
 const API_URL = "http://localhost:4000";
 const INITIAL_FORM = { email: "", password: "" };
 
-type dataType = {
-    success: boolean;
-    message?: string;
-    user?: {
-        id: string;
-        name: string;
-        email: string;
-    };
-};
 
 type LoginProps = {
-    onSubmit: () => void;
-    onSwitchMode: (data: dataType) => void;
+    onSubmit: (data: { token: string; user?: User }) => void;
+    onSwitchMode: () => void;
 };
 
 const Login = ({ onSubmit, onSwitchMode }: LoginProps) => {
@@ -28,12 +21,18 @@ const Login = ({ onSubmit, onSwitchMode }: LoginProps) => {
     const MESSAGE_SUCCESS = "bg-green-50 text-green-600 p-3 rounded-lg text-sm mb-4 border border-green-100";
     const MESSAGE_ERROR = "bg-red-50 text-red-600 p-3 rounded-lg text-sm mb-4 border border-red-100";
 
-    const FIELDS = [
-        { name: "email", type: "email", placeholder: "Email", icon: Mail },
-        { name: "password", type: "password", placeholder: "Password", icon: Lock },
+    interface FieldConfig {
+        name: "email" | "password";
+        type: "email" | "password";
+        placeholder: string;
+        icon: LucideIcon;
+    }
+    const FIELDS: FieldConfig[] = [
+        { name: "email", type: "email", placeholder: "Email", icon: Mail }, // Added type annotation
+        { name: "password", type: "password", placeholder: "Password", icon: Lock }, // Added type annotation
     ];
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
         setMessage({ text: "", type: "" });
@@ -80,6 +79,7 @@ const Login = ({ onSubmit, onSwitchMode }: LoginProps) => {
             <form onSubmit={handleSubmit} className="gap-2 flex flex-col">
                 {FIELDS.map(({ name, type, placeholder, icon: Icon }) => (
                     <div
+                        key={name}
                         className="flex border border-red-100 px-3 py-2.5 rounded-lg mb-2 items-center
                     focus-within:ring-red-500 focus-within:ring-2 focus-within:border-red-500 
                     transition-all duration-200">

@@ -4,12 +4,13 @@ import Layout from "./components/Layout";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Dashboard from "./pages/Dashboard";
+import type { User } from "@mikiri/types";
 
 const App = () => {
     const navigate = useNavigate();
-    const [currentUser, setCurrentUser] = useState(() => {
+    const [currentUser, setCurrentUser] = useState<User | null>(() => {
         const stored = localStorage.getItem("currentUser");
-        return stored ? JSON.parse(stored) : null;
+        return stored ? (JSON.parse(stored) as User) : null;
     });
 
     useEffect(() => {
@@ -20,8 +21,10 @@ const App = () => {
         }
     }, [currentUser]);
 
-    const handleAuthSubmit = (data) => {
-        const user = {
+    const handleAuthSubmit = (data: { token: string; user?: User }) => {
+        if (!data.user?.id) return;
+        const user: User = {
+            id: data.user?.id,
             email: data.user?.email,
             name: data.user?.name || "user",
             avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(data.user?.name || "User")}&background=random`,
