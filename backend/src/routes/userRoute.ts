@@ -1,4 +1,4 @@
-import { RequestHandler, Router } from "express";
+import {  Router } from "express";
 import {
     getCurrentUser,
     loginUser,
@@ -12,8 +12,8 @@ const userRouter = Router();
 
 // Public Links
 
-userRouter.post("/register", registerUser as RequestHandler);
-userRouter.post("/login", loginUser as RequestHandler);
+userRouter.post("/register", registerUser);
+userRouter.post("/login", loginUser);
 
 // Private Links
 

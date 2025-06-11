@@ -33,7 +33,9 @@ interface RegisterUserPayload {
 }
 
 export async function registerUser(
-    req: Request<Record<string, never>, Record<string, never>, RegisterUserPayload>,
+    // !TODO - Fix it
+    // req: Request<Record<string, never>, Record<string, never>, RegisterUserPayload>,
+    req: Request,
     res: Response<AuthResponse>,
 ): Promise<void> {
     const { name, email, password } = req.body;
@@ -80,7 +82,9 @@ interface LoginUserPayload {
 }
 
 export async function loginUser(
-    req: Request<Record<string, never>, Record<string, never>, LoginUserPayload>,
+    // !TODO - Fix it
+    // req: Request<Record<string, never>, Record<string, never>, LoginUserPayload>,
+    req: Request,
     res: Response<AuthResponse>,
 ): Promise<void> {
     const { email, password } = req.body;
