@@ -28,8 +28,8 @@ const Login = ({ onSubmit, onSwitchMode }: LoginProps) => {
         icon: LucideIcon;
     }
     const FIELDS: FieldConfig[] = [
-        { name: "email", type: "email", placeholder: "Email", icon: Mail }, // Added type annotation
-        { name: "password", type: "password", placeholder: "Password", icon: Lock }, // Added type annotation
+        { name: "email", type: "email", placeholder: "Email", icon: Mail },
+        { name: "password", type: "password", placeholder: "Password", icon: Lock }, 
     ];
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

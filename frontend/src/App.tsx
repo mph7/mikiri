@@ -6,11 +6,19 @@ import SignUp from "./components/SignUp";
 import Dashboard from "./pages/Dashboard";
 import type { User } from "@mikiri/types";
 
+type Material = {
+    title: string;
+    text: string;
+};
+
 const App = () => {
     const navigate = useNavigate();
     const [currentUser, setCurrentUser] = useState<User | null>(() => {
         const stored = localStorage.getItem("currentUser");
         return stored ? (JSON.parse(stored) as User) : null;
+    });
+    const [materials, setMaterials] = useState<Material[]>(() => {
+        return JSON.parse(localStorage.getItem("materials") || "[]");
     });
 
     useEffect(() => {
@@ -21,6 +29,11 @@ const App = () => {
         }
     }, [currentUser]);
 
+    useEffect(() => {
+        localStorage.setItem("materials", JSON.stringify(materials));
+    }, [materials]);
+
+    
     const handleAuthSubmit = (data: { token: string; user?: User }) => {
         if (!data.user?.id) return;
         const user: User = {
@@ -70,7 +83,7 @@ const App = () => {
             />
 
             <Route element={currentUser ? <ProtectedLayout /> : <Navigate to="/login" replace />}>
-                <Route path="/" element={<Dashboard />} />
+                <Route path="/" element={<Dashboard materials={materials} setMaterials={setMaterials} />} />
             </Route>
 
             <Route path="*" element={<Navigate to={currentUser ? "/" : "/login"} />} />

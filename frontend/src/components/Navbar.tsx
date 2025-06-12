@@ -11,7 +11,7 @@ type NavbarProps = {
 const Navbar = ({ user, onLogout }: NavbarProps) => {
     const menuref = useRef<HTMLDivElement | null>(null);
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
-    const navigate = useNavigate();
+    const navigate = useNavigate(); 
 
     const handleMenuToggle = () => setMenuOpen((prev) => !prev);
 
@@ -27,7 +27,7 @@ const Navbar = ({ user, onLogout }: NavbarProps) => {
                 <div className="flex items-center gap-2 cursor-pointer group" onClick={() => navigate("/")}>
                     <div
                         className="relative w-10 h-10 flex items-center justify-center rounded-xl bg-gradient-to-br 
-                    from-red-500  to-red-700 shadow-lg group-hover:shadow-purple-300/50 
+                    from-red-500  to-red-700 shadow-lg group-hover:shadow-purple-300/50     
                     group-hover:scale-105 transition-all duration-300">
                         <Zap className="w-6 h-6 text-white" />
                         <div className="absolute -bottom-1 -middle-1 w-3 h-3 bg-white rounded-full shadow-mdanimate-ping" />

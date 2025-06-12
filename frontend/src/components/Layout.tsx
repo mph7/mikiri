@@ -3,7 +3,6 @@ import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import { Outlet } from "react-router-dom";
 import axios from "axios";
-import { TrendingUp } from "lucide-react";
 import type { MaterialsResponse, Material, User } from "@mikiri/types";
 
 type LayoutProps = {
@@ -74,18 +73,8 @@ const Layout = ({ onLogout, user }: LayoutProps) => {
             <Sidebar user={user} />
             <div className="ml-0 xl:ml-64 lg:ml-64 md:ml-16 pt-16 p-3 sm:p-4 md:p-4 transition-all duration-300">
                 <div className="grid grid-cols-1 xl:grid-cols-3 sm: gap-6">
-                    <div className="xl:col-span-2 space-y-3 sm:space-y-4 sm">
+                    <div className="xl:col-span-3 space-y-3 sm:space-y-4 sm">
                         <Outlet context={{ materials, refreshMaterials: fetchMaterials }} />
-                    </div>
-
-                    <div className="xl:col-span-1 space-y-4 sm:space-y-6">
-                        <div className="bg-white rounded-xl p-4 sm:p-5 shadow-sm border border-red-100 ">
-                            <h3
-                                className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-gray-800
-                            flex items-center gap-2">
-                                <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-red-600" />
-                            </h3>
-                        </div>
                     </div>
                 </div>
             </div>
