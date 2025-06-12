@@ -4,12 +4,8 @@ import Layout from "./components/Layout";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Dashboard from "./pages/Dashboard";
-import type { User } from "@mikiri/types";
-
-type Material = {
-    title: string;
-    text: string;
-};
+import type { User, Material } from "@mikiri/types";
+import Reader from "./components/Reader";
 
 const App = () => {
     const navigate = useNavigate();
@@ -33,7 +29,6 @@ const App = () => {
         localStorage.setItem("materials", JSON.stringify(materials));
     }, [materials]);
 
-    
     const handleAuthSubmit = (data: { token: string; user?: User }) => {
         if (!data.user?.id) return;
         const user: User = {
@@ -83,7 +78,13 @@ const App = () => {
             />
 
             <Route element={currentUser ? <ProtectedLayout /> : <Navigate to="/login" replace />}>
-                <Route path="/" element={<Dashboard materials={materials} setMaterials={setMaterials} />} />
+                <Route
+                    path="/"
+                    element={
+                        <Dashboard materials={materials} setMaterials={setMaterials} />
+                    }
+                />
+                <Route path="/material/:id" element={<Reader materials={materials}/>} />
             </Route>
 
             <Route path="*" element={<Navigate to={currentUser ? "/" : "/login"} />} />

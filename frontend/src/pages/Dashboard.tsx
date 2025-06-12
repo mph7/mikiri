@@ -1,18 +1,16 @@
 import { PlusIcon } from "lucide-react";
 import { useState } from "react";
 import MaterialModal from "../components/MaterialModal";
-
-type DashboardMaterial = {
-    title: string;
-    text: string;
-};
+import type { Material } from "@mikiri/types";
+import { useNavigate } from "react-router-dom";
 
 type DashboardProps = {
-    materials: DashboardMaterial[];
-    setMaterials: React.Dispatch<React.SetStateAction<DashboardMaterial[]>>;
+    materials: Material[];
+    setMaterials: React.Dispatch<React.SetStateAction<Material[]>>;
 };
 
 const Dashboard = ({ materials, setMaterials }: DashboardProps) => {
+    const navigate = useNavigate();
     const [modalOpen, setModalOpen] = useState<boolean>(false);
 
     return (
@@ -37,11 +35,15 @@ const Dashboard = ({ materials, setMaterials }: DashboardProps) => {
                         <div
                             key={item.title}
                             className="border-gray-500 border rounded-xl p-4 shadow-sm backdrop-blur-lg">
-                            <h2 className="font-semibold text-md mb-4">{item.title}</h2>
+                            <h2
+                                className="font-semibold text-md mb-4 cursor-pointer hover:text-gray-600"
+                                onClick={() => navigate(`/material/${item._id}`)}>
+                                {item.title}
+                            </h2>
                             <p>
-                                {item.text.length > 50
-                                    ? item.text.slice(0, Math.floor(Math.random() * (60 - 50 + 1)) + 50) + "...."
-                                    : item.text}
+                                {item.content.length > 50
+                                    ? item.content.slice(0, Math.floor(Math.random() * (60 - 50 + 1)) + 50) + "...."
+                                    : item.content}
                             </p>
                         </div>
                     ))}

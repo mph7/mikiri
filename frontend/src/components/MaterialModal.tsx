@@ -1,14 +1,10 @@
 import { NotebookText, TextQuote, XIcon, PlusIcon } from "lucide-react";
 import React, { useState } from "react";
-
-type DashboardMaterial = {
-    title: string;
-    text: string;
-};
+import type { Material } from "@mikiri/types";
 
 type Props = {
     setModal: React.Dispatch<React.SetStateAction<boolean>>;
-    setMaterials: React.Dispatch<React.SetStateAction<DashboardMaterial[]>>;
+    setMaterials: React.Dispatch<React.SetStateAction<Material[]>>;
 };
 
 const modalFields = [
