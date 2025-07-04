@@ -148,7 +148,7 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     return (
-        <Sidebar className="bg-gradient-to-br from-gray-700 to-gray-800 border-r-4 border-gray-300 text-white" {...props}>
+        <Sidebar className="border-r-4 border-gray-300 text-white" {...props}>
             <SidebarHeader >
                 <SidebarMenu>
                     <SidebarMenuItem>
@@ -159,7 +159,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                                 </div>
                                 <div className="grid flex-1 text-left text-sm leading-tight">
                                     <span className="truncate font-semibold">日本語学習</span>
-                                    <span className="truncate text-xs text-muted-foreground">Japanese Learning</span>
+                                    <span className="truncate text-xs text-white">Japanese Learning</span>
                                 </div>
                             </a>
                         </SidebarMenuButton>
@@ -193,7 +193,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
                 {/* Learning Sections */}
                 <SidebarGroup>
-                    <SidebarGroupLabel>Learning</SidebarGroupLabel>
+                    <SidebarGroupLabel className="text-white">Learning</SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
                             {data.navigation.learning.map((item) => (
@@ -214,13 +214,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                                         <CollapsibleContent>
                                             <SidebarMenuSub>
                                                 {item.items?.map((subItem) => (
-                                                    <SidebarMenuSubItem key={subItem.title}>
-                                                        <SidebarMenuSubButton asChild>
+                                                    <SidebarMenuSubItem key={subItem.title} >
+                                                        <SidebarMenuSubButton asChild className="duration-200 hover:bg-gray-800">
                                                             <a href={subItem.url} className="flex flex-col gap-1">
                                                                 <div className="flex items-center justify-between w-full">
-                                                                    <span className="text-sm">{subItem.title}</span>
+                                                                    <span className="text-sm text-white">{subItem.title}</span>
                                                                     {subItem.progress && (
-                                                                        <span className="text-xs text-muted-foreground">{subItem.progress}%</span>
+                                                                        <span className="text-xs text-white">{subItem.progress}%</span>
                                                                     )}
                                                                 </div>
                                                                 {subItem.progress && <Progress value={subItem.progress} className="h-1 w-full" />}
@@ -239,7 +239,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
                 {/* Practice Section */}
                 <SidebarGroup>
-                    <SidebarGroupLabel>Practice</SidebarGroupLabel>
+                    <SidebarGroupLabel className="text-white">Practice</SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
                             {data.navigation.practice.map((item) => (
@@ -263,7 +263,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
                 {/* Progress Section */}
                 <SidebarGroup>
-                    <SidebarGroupLabel>Progress</SidebarGroupLabel>
+                    <SidebarGroupLabel className="text-white">Progress</SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
                             {data.navigation.progress.map((item) => (
@@ -291,7 +291,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                                 </div>
                                 <div className="grid flex-1 text-left text-sm leading-tight">
                                     <span className="truncate font-semibold">{data.user.name}</span>
-                                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                                    <div className="flex items-center gap-2 text-xs text-white">
                                         <span>🔥 {data.user.streak} day streak</span>
                                     </div>
                                 </div>
