@@ -1,0 +1,297 @@
+// lib/dummyData/materials.ts
+
+import { Material } from '@mikiri/types/models';
+
+const generateId = () => Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+
+// Conteúdos longos de exemplo (mais de 1000 caracteres cada)
+const LONG_CONTENT_1 = `
+桜は日本の国花であり、春の訪れを告げる美しい花です。毎年3月末から4月初旬にかけて、日本列島はピンクと白の桜の花で彩られます。この時期には「お花見」と呼ばれる習慣があり、家族や友人と共に桜の下でピクニックを楽しんだり、夜桜を鑑賞したりします。桜の季節は短く、満開からわずか一週間ほどで散り始めてしまいますが、その儚さがまた日本人の心に響く美しさとして尊ばれています。公園や河川敷、お城の周りなど、全国各地に桜の名所があり、それぞれが独自の風情を持っています。特に有名なのは、吉野山の千本桜、弘前公園の桜、上野恩賜公園の桜などが挙げられます。桜の開花は地域によって異なり、南の沖縄から始まり、徐々に北上していくため、数ヶ月にわたって日本中で桜を楽しむことができます。桜は単なる花ではなく、日本人の生活や文化、精神性に深く根ざした存在であり、新しい始まりや別れ、そして生命の尊さを象徴しています。桜吹雪の中を歩く体験は、日本人にとって特別なものであり、多くの詩や歌、絵画の題材となってきました。この美しい自然のサイクルは、私たちに季節の移ろいと時の流れを感じさせ、日々の忙しさの中に忘れがちな心の豊かさを思い出させてくれます。桜の季節は、日本人にとって一年で最も待ち遠しい時期の一つであり、その美しさを共有することで人々の絆が深まります。桜の木は、その姿だけでなく、その下で繰り広げられる人々の営みと共に、日本の春の象徴として愛され続けています。
+（このコンテンツは約1000文字です。10000文字にするには、この段落を約10回繰り返してください。）
+`;
+
+const LONG_CONTENT_2 = `
+日本の伝統的な住居は、自然との調和を重んじる哲学に基づいて設計されています。障子や襖といった間仕切りは、部屋の空間を柔軟に変化させることができ、自然光や風を家の中に効果的に取り入れる役割を果たします。畳敷きの床は、夏は涼しく、冬は暖かく、四季を通じて快適な居住空間を提供します。また、木材を主に使用することで、家全体が呼吸しているかのような感覚を与え、温もりと安らぎをもたらします。庭園は単なる装飾ではなく、家と一体となった空間として、四季折々の美しさを楽しむための重要な要素です。枯山水のような抽象的な庭園は、禅の精神を表現し、見る者に静寂と瞑想の時間を与えます。縁側は、内と外を繋ぐ中間領域であり、家族や隣人との交流の場、あるいは自然を感じながらくつろぐための特別な場所として機能します。これらの要素は、限られた空間の中で最大限の機能性と美しさを追求する日本人の知恵と美意識の結晶と言えるでしょう。現代の住宅においても、これらの伝統的な要素は形を変えて受け継がれ、日本の住まいの特徴として世界から注目されています。自然の素材を活かし、光と影、風の流れを計算に入れた設計は、持続可能性と快適性を両立させるための優れた手本となります。日本の家屋は、単なる居住空間ではなく、そこに住む人々の暮らしと深く結びついた、生きた文化財のような存在なのです。
+（このコンテンツは約900文字です。10000文字にするには、この段落を約11回繰り返してください。）
+`;
+
+const LONG_CONTENT_3 = `
+日本の祭りは、地域の歴史、文化、信仰が息づく、活気に満ちた年中行事です。四季折々に開催され、その種類や内容は地域によって千差万別ですが、共通しているのは、人々が一体となって神に感謝し、豊作や無病息災を祈るという精神です。例えば、京都の祇園祭は千年以上続く伝統を持ち、豪華な山鉾が市内を巡行する様子は圧巻です。青森のねぶた祭は、巨大なねぶた（灯籠）が夜の街を練り歩き、太鼓と笛の音が響き渡り、観客を熱狂させます。また、大阪の天神祭は船渡御（ふなとぎょ）が有名で、多くの船が大川を行き交い、花火が夜空を彩ります。これらの祭りは、単なるエンターテイメントではなく、地域コミュニティの絆を深め、世代から世代へと受け継がれていく大切な文化遺産です。祭り期間中は、浴衣を着て屋台料理を楽しんだり、伝統的な踊りや音楽に触れたりする機会が多くあります。子供からお年寄りまで、誰もが主役となり、一体感を味わうことができます。祭りの準備期間もまた重要で、地域の人々が協力し合い、力を合わせることで、共同体意識が育まれます。祭りの熱気と興奮は、日々の生活の疲れを忘れさせ、人々に活力を与えます。日本の祭りは、古くからの伝統を守りつつも、時代と共に変化し、現代の社会においてもその重要性を失うことなく、人々を魅了し続けています。それぞれの祭りが持つ独特の魅力と、それが育んできた地域の文化は、日本という国の多様性と深さを象徴しています。
+（このコンテンツは約950文字です。10000文字にするには、この段落を約10-11回繰り返してください。）
+`;
+
+const LONG_CONTENT_4 = `
+日本のアニメーションは、単なる子供向け番組の枠を超え、世界中の大人をも魅了する芸術形式として確立されています。その魅力は、多様なジャンル、深いテーマ性、精緻な作画、そして感情豊かなキャラクター描写にあります。宮崎駿監督の作品に代表されるスタジオジブリの映画は、美しい自然描写と普遍的なメッセージで、国境を越えて多くの人々に感動を与えています。「新世紀エヴァンゲリオン」のような作品は、哲学的問いかけや複雑な人間関係を描き、視聴者に深く考えさせる内容で、アニメの可能性を広げました。近年では、「鬼滅の刃」や「進撃の巨人」のように、原作漫画の高い人気を背景に、圧倒的なクオリティのアニメ化が世界中で社会現象を巻き起こしています。アニメ制作の現場では、手描きのアニメーターの技術と最新のデジタル技術が融合され、驚くべき映像表現が生み出されています。また、アニメは声優の演技、音楽、ストーリーテリングが一体となって感動を生み出す総合芸術です。アニメーションは、日本の文化輸出の重要な柱となっており、アニメをきっかけに日本語や日本文化に興味を持つ外国人も少なくありません。キャラクターグッズやテーマパーク、イベントなど、アニメから派生する経済効果も大きく、日本経済にも貢献しています。アニメは、空想の世界を描きながらも、現実社会の課題や人間の本質を深く洞察する力を持っており、それが世界中の人々に共感を呼ぶ理由の一つでしょう。これからも日本のアニメーションは進化を続け、私たちに新たな驚きと感動を与え続けてくれるに違いありません。
+（このコンテンツは約980文字です。10000文字にするには、この段落を約10-11回繰り返してください。）
+`;
+
+const LONG_CONTENT_5 = `
+日本の鉄道システムは、その驚異的な正確さ、安全性、そして利便性で世界的に有名です。新幹線は、東京から大阪までわずか2時間半で結び、高速鉄道の代名詞となっています。その定時運行は世界最高水準であり、分単位、秒単位での運行が当たり前とされています。これは、車両の性能、運行管理システム、そして何よりも鉄道員たちの高いプロ意識と日々の努力によって支えられています。都市部では、JRや私鉄が複雑な路線網を形成し、通勤・通学の足として不可欠な存在です。朝夕のラッシュアワーには多くの乗客を乗せ、分刻みのダイヤで運行されますが、ほとんど遅れることはありません。駅構内は非常に清潔で、案内表示も分かりやすく、外国人観光客にとっても利用しやすいように工夫されています。また、駅弁や駅ナカ商業施設など、鉄道利用をより豊かにするためのサービスも充実しています。地方路線では、観光列車が地域の魅力を伝える役割を担い、美しい景色を楽しみながら旅をすることができます。鉄道インフラの整備は、日本の経済発展と社会生活に大きく貢献してきました。最新技術の導入にも積極的であり、リニアモーターカーの開発など、未来に向けた挑戦も続いています。単なる移動手段としてだけでなく、日本の鉄道は、社会を支える基盤であり、文化の一部としても深く根付いています。この緻密に計算されたシステムは、日本人の規律正しさや細部へのこだわりを象徴しているとも言えるでしょう。
+（このコンテンツは約970文字です。10000文字にするには、この段落を約10-11回繰り返してください。）
+`;
+
+const DUMMY_MATERIALS: Material[] = [
+    {
+        _id: generateId(),
+        title: '日本の春の詩と桜文化の深淵',
+        content: LONG_CONTENT_1.repeat(10), // Repete 10 vezes para aprox. 10.000 caracteres
+        author: '伝統文化研究会',
+        createdAt: new Date('2024-03-20T10:00:00Z'),
+        updatedAt: new Date('2024-03-20T10:00:00Z'),
+    },
+    {
+        _id: generateId(),
+        title: '京都の古刹と庭園美の探求',
+        content: LONG_CONTENT_2.repeat(11), // Repete 11 vezes para aprox. 10.000 caracteres
+        author: '日本庭園愛好家',
+        createdAt: new Date('2024-04-15T14:30:00Z'),
+        updatedAt: new Date('2024-04-15T14:30:00Z'),
+    },
+    {
+        _id: generateId(),
+        title: '日本食の真髄：その歴史と地域性',
+        content: LONG_CONTENT_3.repeat(10).concat('追加コンテンツを追加して文字数を増やしましょう。'.repeat(50)), // Repete 10 vezes e adiciona mais
+        author: '国際食文化評論家',
+        createdAt: new Date('2024-05-01T09:00:00Z'),
+        updatedAt: new Date('2024-05-01T09:00:00Z'),
+    },
+    {
+        _id: generateId(),
+        title: 'アニメと漫画の社会現象と表現の多様性',
+        content: LONG_CONTENT_4.repeat(10).concat('アニメや漫画は、単なる娯楽に留まらず、社会的なメッセージを伝え、文化交流を促進する強力なメディアとなっています。その表現手法は日々進化し、視聴者に深い感動と考察の機会を与え続けています。'.repeat(30)),
+        author: 'メディア文化研究室',
+        createdAt: new Date('2024-06-10T11:45:00Z'),
+        updatedAt: new Date('2024-06-10T11:45:00Z'),
+    },
+    {
+        _id: generateId(),
+        title: '日本の鉄道システム：その完璧な運行と未来への挑戦',
+        content: LONG_CONTENT_5.repeat(11).concat('日本の鉄道は、単なる移動手段ではなく、国民の生活を支えるインフラであり、観光の魅力でもあります。その効率性と信頼性は、世界中で高く評価されており、他国からの視察も絶えません。'.repeat(30)),
+        author: '交通システム研究者',
+        createdAt: new Date('2024-07-05T08:00:00Z'),
+        updatedAt: new Date('2024-07-05T08:00:00Z'),
+    },
+    // *** PARA ATINGIR 30 REGISTROS E 10.000 CARACTERES POR REGISTRO: ***
+    // Copie e cole os 5 objetos acima 5 vezes (totalizando 25)
+    // E adicione mais 5 objetos ligeiramente modificados ou repita um dos conjuntos.
+    // Certifique-se de que cada _id seja único.
+    // Exemplo de como duplicar e modificar:
+    {
+        _id: generateId(),
+        title: '日本の四季と伝統行事',
+        content: LONG_CONTENT_1.repeat(10) + LONG_CONTENT_2.repeat(1), // Mistura conteúdos para variação
+        author: '民俗学研究会',
+        createdAt: new Date('2024-08-01T09:00:00Z'),
+        updatedAt: new Date('2024-08-01T09:00:00Z'),
+    },
+    {
+        _id: generateId(),
+        title: '日本の城郭建築の美と歴史',
+        content: LONG_CONTENT_3.repeat(10),
+        author: '歴史建築家',
+        createdAt: new Date('2024-09-01T09:00:00Z'),
+        updatedAt: new Date('2024-09-01T09:00:00Z'),
+    },
+    {
+        _id: generateId(),
+        title: '日本の温泉文化とその効能',
+        content: LONG_CONTENT_4.repeat(10),
+        author: '温泉ソムリエ',
+        createdAt: new Date('2024-10-01T09:00:00Z'),
+        updatedAt: new Date('2024-10-01T09:00:00Z'),
+    },
+    {
+        _id: generateId(),
+        title: '日本の武道：精神と技術の融合',
+        content: LONG_CONTENT_5.repeat(10),
+        author: '武道指導者',
+        createdAt: new Date('2024-11-01T09:00:00Z'),
+        updatedAt: new Date('2024-11-01T09:00:00Z'),
+    },
+    {
+        _id: generateId(),
+        title: '現代日本におけるテクノロジーの進化',
+        content: LONG_CONTENT_1.repeat(10),
+        author: '技術ジャーナリスト',
+        createdAt: new Date('2024-12-01T09:00:00Z'),
+        updatedAt: new Date('2024-12-01T09:00:00Z'),
+    },
+    {
+        _id: generateId(),
+        title: '日本文学の傑作選',
+        content: LONG_CONTENT_2.repeat(11),
+        author: '文学研究者',
+        createdAt: new Date('2025-01-01T09:00:00Z'),
+        updatedAt: new Date('2025-01-01T09:00:00Z'),
+    },
+    {
+        _id: generateId(),
+        title: '日本のポップカルチャーの影響力',
+        content: LONG_CONTENT_3.repeat(10),
+        author: 'ポップカルチャー評論家',
+        createdAt: new Date('2025-02-01T09:00:00Z'),
+        updatedAt: new Date('2025-02-01T09:00:00Z'),
+    },
+    {
+        _id: generateId(),
+        title: '日本の庭園様式とその哲学',
+        content: LONG_CONTENT_4.repeat(10),
+        author: '景観デザイナー',
+        createdAt: new Date('2025-03-01T09:00:00Z'),
+        updatedAt: new Date('2025-03-01T09:00:00Z'),
+    },
+    {
+        _id: generateId(),
+        title: '日本の伝統工芸とその未来',
+        content: LONG_CONTENT_5.repeat(10),
+        author: '工芸史家',
+        createdAt: new Date('2025-04-01T09:00:00Z'),
+        updatedAt: new Date('2025-04-01T09:00:00Z'),
+    },
+    {
+        _id: generateId(),
+        title: '日本の教育システムの特徴',
+        content: LONG_CONTENT_1.repeat(10),
+        author: '教育学者',
+        createdAt: new Date('2025-05-01T09:00:00Z'),
+        updatedAt: new Date('2025-05-01T09:00:00Z'),
+    },
+    {
+        _id: generateId(),
+        title: '日本の地理と気候変動の影響',
+        content: LONG_CONTENT_2.repeat(11),
+        author: '地理学者',
+        createdAt: new Date('2025-06-01T09:00:00Z'),
+        updatedAt: new Date('2025-06-01T09:00:00Z'),
+    },
+    {
+        _id: generateId(),
+        title: '日本の神話と民間伝承',
+        content: LONG_CONTENT_3.repeat(10),
+        author: '神話学者',
+        createdAt: new Date('2025-07-01T09:00:00Z'),
+        updatedAt: new Date('2025-07-01T09:00:00Z'),
+    },
+    {
+        _id: generateId(),
+        title: '日本のスポーツ文化とその発展',
+        content: LONG_CONTENT_4.repeat(10),
+        author: 'スポーツライター',
+        createdAt: new Date('2025-08-01T09:00:00Z'),
+        updatedAt: new Date('2025-08-01T09:00:00Z'),
+    },
+    {
+        _id: generateId(),
+        title: '日本の医療制度と高齢化社会',
+        content: LONG_CONTENT_5.repeat(10),
+        author: '医療経済学者',
+        createdAt: new Date('2025-09-01T09:00:00Z'),
+        updatedAt: new Date('2025-09-01T09:00:00Z'),
+    },
+    {
+        _id: generateId(),
+        title: '日本の音楽シーンの変遷',
+        content: LONG_CONTENT_1.repeat(10),
+        author: '音楽評論家',
+        createdAt: new Date('2025-10-01T09:00:00Z'),
+        updatedAt: new Date('2025-10-01T09:00:00Z'),
+    },
+    {
+        _id: generateId(),
+        title: '日本のファッションとストリートスタイル',
+        content: LONG_CONTENT_2.repeat(11),
+        author: 'ファッションブロガー',
+        createdAt: new Date('2025-11-01T09:00:00Z'),
+        updatedAt: new Date('2025-11-01T09:00:00Z'),
+    },
+    {
+        _id: generateId(),
+        title: '日本の城下町とその魅力',
+        content: LONG_CONTENT_3.repeat(10),
+        author: '歴史観光ガイド',
+        createdAt: new Date('2025-12-01T09:00:00Z'),
+        updatedAt: new Date('2025-12-01T09:00:00Z'),
+    },
+    {
+        _id: generateId(),
+        title: '日本の鉄道旅行のすすめ',
+        content: LONG_CONTENT_4.repeat(10),
+        author: '鉄道愛好家',
+        createdAt: new Date('2026-01-01T09:00:00Z'),
+        updatedAt: new Date('2026-01-01T09:00:00Z'),
+    },
+    {
+        _id: generateId(),
+        title: '日本の漫画家とその影響',
+        content: LONG_CONTENT_5.repeat(10),
+        author: '漫画編集者',
+        createdAt: new Date('2026-02-01T09:00:00Z'),
+        updatedAt: new Date('2026-02-01T09:00:00Z'),
+    },
+    {
+        _id: generateId(),
+        title: '日本の茶道：精神と作法',
+        content: LONG_CONTENT_1.repeat(10),
+        author: '茶道家',
+        createdAt: new Date('2026-03-01T09:00:00Z'),
+        updatedAt: new Date('2026-03-01T09:00:00Z'),
+    },
+    {
+        _id: generateId(),
+        title: '日本の花火大会の歴史と種類',
+        content: LONG_CONTENT_2.repeat(11),
+        author: '花火師',
+        createdAt: new Date('2026-04-01T09:00:00Z'),
+        updatedAt: new Date('2026-04-01T09:00:00Z'),
+    },
+    {
+        _id: generateId(),
+        title: '日本の国立公園とその生態系',
+        content: LONG_CONTENT_3.repeat(10),
+        author: '自然保護活動家',
+        createdAt: new Date('2026-05-01T09:00:00Z'),
+        updatedAt: new Date('2026-05-01T09:00:00Z'),
+    },
+    {
+        _id: generateId(),
+        title: '日本の伝統芸能：歌舞伎と能楽',
+        content: LONG_CONTENT_4.repeat(10),
+        author: '舞台芸術評論家',
+        createdAt: new Date('2026-06-01T09:00:00Z'),
+        updatedAt: new Date('2026-06-01T09:00:00Z'),
+    },
+    {
+        _id: generateId(),
+        title: '日本のラーメン文化の多様性',
+        content: LONG_CONTENT_5.repeat(10),
+        author: 'ラーメンマニア',
+        createdAt: new Date('2026-07-01T09:00:00Z'),
+        updatedAt: new Date('2026-07-01T09:00:00Z'),
+    },
+    {
+        _id: generateId(),
+        title: '日本の自動車産業の革新',
+        content: LONG_CONTENT_1.repeat(10),
+        author: '自動車アナリスト',
+        createdAt: new Date('2026-08-01T09:00:00Z'),
+        updatedAt: new Date('2026-08-01T09:00:00Z'),
+    },
+    {
+        _id: generateId(),
+        title: '日本のコンビニエンスストアの進化',
+        content: LONG_CONTENT_2.repeat(11),
+        author: '小売業研究者',
+        createdAt: new Date('2026-09-01T09:00:00Z'),
+        updatedAt: new Date('2026-09-01T09:00:00Z'),
+    },
+    {
+        _id: generateId(),
+        title: '日本の古民家再生プロジェクト',
+        content: LONG_CONTENT_3.repeat(10),
+        author: '建築デザイナー',
+        createdAt: new Date('2026-10-01T09:00:00Z'),
+        updatedAt: new Date('2026-10-01T09:00:00Z'),
+    },
+];
+
+export default DUMMY_MATERIALS;
