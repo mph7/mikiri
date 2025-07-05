@@ -20,19 +20,12 @@ const Dashboard = () => {
   const materials = DUMMY_MATERIALS;
   return (
     <>
-      <div className="h-full border border-gray-100 rounded-xl p-20 ">
+      <div className="h-full rounded-xl p-20 ">
         <div className="flex justify-between items-center ">
           <h1 className="font-semibold text-xl flex">
-            Hello Username, let's read something today
+            Hello Username, let&apos;s read something today
           </h1>
-          {/* <button
-                        className="bg-gradient-to-r from-gray-500 to-gray-900 px-4 text-white py-2.5
-                    rounded-lg cursor-pointer mt-2 flex gap-2 items-center justify-center text-sm font-semibold
-                    hover:shadow-md transition-all duration-200"
-                        onClick={() => setModalOpen(true)}>
-                        <PlusIcon />
-                        Add new text
-                    </button> */}
+
           <Dialog>
             <form>
               <DialogTrigger asChild>
