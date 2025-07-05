@@ -6,7 +6,6 @@ import {
     ChevronDown,
     FileText,
     Gamepad2,
-    GraduationCap,
     Home,
     Languages,
     MessageCircle,
@@ -16,9 +15,6 @@ import {
     Target,
     Trophy,
     Volume2,
-    Inbox,
-    Search,
-    Zap
 } from "lucide-react"
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
@@ -40,6 +36,7 @@ import {
 } from "@/components/ui/sidebar"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
+import Image from "next/image";
 
 
 const data = {
@@ -144,21 +141,19 @@ const data = {
     },
 }
 
-// className="bg-gradient-to-r from-gray-700 to-gray-800 border-r-4 border-gray-300"
-
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     return (
-        <Sidebar className="border-r-4 border-gray-300 text-white" {...props}>
+        <Sidebar collapsible='icon' className="border-r-4 border-gray-300 text-white" {...props}>
             <SidebarHeader >
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
                             <a href="#" className="font-semibold">
-                                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-gradient-to-br from-red-500 to-pink-500 text-white">
-                                    <GraduationCap className="size-4" />
+                                <div className="flex aspect-square size-12 items-center justify-center rounded-lg  text-white group-data-[collapsible=icon]:size-8">
+                                    <Image src='/logo.png' alt='logo' width='150' height='150'/>
                                 </div>
                                 <div className="grid flex-1 text-left text-sm leading-tight">
-                                    <span className="truncate font-semibold">日本語学習</span>
+                                    <span className="truncate font-yuji text-2xl">Mikiri</span>
                                     <span className="truncate text-xs text-white">Japanese Learning</span>
                                 </div>
                             </a>
@@ -241,6 +236,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <SidebarGroup>
                     <SidebarGroupLabel className="text-white">Practice</SidebarGroupLabel>
                     <SidebarGroupContent>
+
                         <SidebarMenu>
                             {data.navigation.practice.map((item) => (
                                 <SidebarMenuItem key={item.title}>
@@ -249,7 +245,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                                             <item.icon className="size-4" />
                                             <span>{item.title}</span>
                                             {item.badge && (
-                                                <Badge variant="outline" className="ml-auto text-xs">
+                                                <Badge variant="secondary" className="ml-auto text-xs">
                                                     {item.badge}
                                                 </Badge>
                                             )}
