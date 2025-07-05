@@ -8,13 +8,24 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 import React from "react";
 import DUMMY_MATERIALS from "./dummyMaterial";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import Link from "next/link";
+import { BookOpen } from "lucide-react";
+import { BookTextIcon } from "@/components/ui/book-text";
+
+const BASE_URL = process.env.BASE_URL;
 
 const Dashboard = () => {
   const materials = DUMMY_MATERIALS;
@@ -75,6 +86,13 @@ const Dashboard = () => {
             <Card key={item.title}>
               <CardHeader>
                 <CardTitle>{item.title}</CardTitle>
+                <CardAction>
+                  <Link href={`${BASE_URL}/read/${item._id}`}>
+                    <div className="border border-slate-500 p-0.5 rounded-md hover:bg-slate-400 transition-colors">
+                      <BookTextIcon />
+                    </div>
+                  </Link>
+                </CardAction>
               </CardHeader>
               <CardContent>
                 <p>

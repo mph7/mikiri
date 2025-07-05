@@ -23,7 +23,6 @@
     --color-banana: #ffcc00;
 }
 
-
 :root {
     --font-sans: Geist, ui-sans-serif, sans-serif;
     --font-serif: Lora, ui-serif, serif;
@@ -160,8 +159,6 @@
     --shadow-2xl: var(--shadow-2xl);
 }
 
-
-
 @layer base {
     * {
         @apply border-border outline-ring/50;
@@ -171,5 +168,4 @@
         @apply bg-background text-foreground;
     }
 }
-
 
