@@ -1,4 +1,3 @@
-import { ArrowLeft } from "lucide-react";
 import materials from "./../../dashboard/dummyMaterial";
 import React from "react";
 import BackButton from "@/app/(root)/read/[id]/BackButton";
