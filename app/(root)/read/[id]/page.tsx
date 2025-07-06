@@ -2,7 +2,13 @@ import materials from "./../../dashboard/dummyMaterial";
 import React from "react";
 import BackButton from "@/app/(root)/read/[id]/BackButton";
 
-const Reader = async ({ params }: { params: { id: string } }) => {
+type ReaderProps = {
+  params: Promise<{
+    id: string;
+  }>;
+};
+
+const Reader = async ({ params }: ReaderProps) => {
   const { id } = await params;
 
   const currentMaterial = materials.find((material) => material.id === id);
