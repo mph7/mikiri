@@ -22,10 +22,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { BookOpen } from "lucide-react";
 import { BookTextIcon } from "@/components/ui/book-text";
-
-const BASE_URL = process.env.BASE_URL;
 
 const Dashboard = () => {
   const materials = DUMMY_MATERIALS;
@@ -87,7 +84,7 @@ const Dashboard = () => {
               <CardHeader>
                 <CardTitle>{item.title}</CardTitle>
                 <CardAction>
-                  <Link href={`${BASE_URL}/read/${item._id}`}>
+                  <Link href={`/read/${item.id}`}>
                     <div className="border border-slate-500 p-0.5 rounded-md hover:bg-slate-400 transition-colors">
                       <BookTextIcon />
                     </div>
