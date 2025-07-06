@@ -95,7 +95,7 @@ const Login = () => {
                 type={
                   type !== "password"
                     ? type
-                    : showPassword === true
+                    : showPassword
                       ? "text"
                       : "password"
                 }

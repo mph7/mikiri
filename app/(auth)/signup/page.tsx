@@ -143,7 +143,6 @@ const SignUp = () => {
         <p className="text-center text-sm text-gray-600 mt-6">
           Already have an account?{" "}
           <button
-            onClick={onSwitchMode}
             className="text-red-600 hover:text-red-700 hover:underline
                 font-medium transition-colors cursor-pointer"
           >
