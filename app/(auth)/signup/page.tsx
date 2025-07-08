@@ -72,7 +72,7 @@ const SignUp = () => {
   };
 
   return (
-    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-500 to-gray-800">
+    <div className="w-full flex items-center justify-center bg-gradient-to-br from-gray-500 to-gray-800 h-dvh">
       <div
         className="max-w-md bg-white shadow-lg border border-red-100 rounded-xl p-12
         flex flex-col items-center justify-center"
