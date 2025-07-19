@@ -1,15 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth/next";
+import { auth } from "@/lib/auth";
 
 import { db } from "@/lib/db";
-import { authOptions } from "@/lib/auth";
 
 // Helper to extract ID from URL
 const getMaterialIdFromUrl = (req: NextRequest) => {
-  const pathParts = req.nextUrl.pathname.split('/');
+  const pathParts = req.nextUrl.pathname.split("/");
   // Assumes URL is /api/materials/[materialId]
   return pathParts[pathParts.length - 1];
-}
+};
 
 export async function GET(req: NextRequest) {
   try {
@@ -35,7 +34,7 @@ export async function GET(req: NextRequest) {
 export async function PATCH(req: NextRequest) {
   try {
     const materialId = getMaterialIdFromUrl(req);
-    const session = await getServerSession(authOptions);
+    const session = await auth();
 
     if (!session?.user?.id) {
       return new NextResponse("Unauthorized", { status: 401 });
@@ -69,7 +68,7 @@ export async function PATCH(req: NextRequest) {
 export async function DELETE(req: NextRequest) {
   try {
     const materialId = getMaterialIdFromUrl(req);
-    const session = await getServerSession(authOptions);
+    const session = await auth();
 
     if (!session?.user?.id) {
       return new NextResponse("Unauthorized", { status: 401 });
