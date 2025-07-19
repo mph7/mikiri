@@ -23,21 +23,24 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { BookTextIcon } from "@/components/ui/book-text";
+import { auth } from "@/lib/auth";
 
-const Dashboard = () => {
+const Dashboard = async () => {
+  const session = await auth();
   const materials = DUMMY_MATERIALS;
+
   return (
     <>
       <div className="h-full rounded-xl p-20 ">
         <div className="flex justify-between items-center ">
           <h1 className="font-semibold text-xl flex">
-            Hello Username, let&apos;s read something today
+            {`Hello ${session?.user?.name}, let's read something today`}
           </h1>
 
           <Dialog>
             <form>
               <DialogTrigger asChild>
-                <Button>Open Dialog</Button>
+                <Button variant="outline">Open Dialog</Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-[425px] ">
                 <DialogHeader>

@@ -38,7 +38,12 @@ const data = {
   },
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+import { Session } from "next-auth";
+
+export function AppSidebar({
+  session,
+  ...props
+}: React.ComponentProps<typeof Sidebar> & { session: Session }) {
   return (
     <Sidebar
       collapsible="icon"
@@ -99,7 +104,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">
-                    {data.user.name}
+                    {session.user?.name + "さん"}
                   </span>
                   <div className="flex items-center gap-2 text-xs text-white">
                     <span>🔥 {data.user.streak} day streak</span>
