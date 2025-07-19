@@ -3,6 +3,8 @@
 import { LogInIcon, LucideIcon, Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
+import { authAdapter } from "@/lib/adapters/auth";
+import { useRouter } from "next/navigation";
 
 const INITIAL_FORM = { email: "", password: "" };
 
@@ -27,28 +29,31 @@ const Login = () => {
     { name: "password", type: "password", placeholder: "Password", icon: Lock },
   ];
 
+  const router = useRouter();
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     setMessage({ text: "", type: "" });
 
-    // try {
-    //     const { data } = await axios.post(`${API_URL}/api/user/login`, {
-    //         email: formData.email,
-    //         password: formData.password,
-    //     });
-    //     if (!data.token) throw new Error(data.message || "Login failed");
+    try {
+      const result = await authAdapter.login(formData);
 
-    //     console.log("Login successful. ", data);
-    //     setMessage({ text: "Login successful, redirecting...", type: "success" });
-    //     onSubmit(data);
-    //     setFormData(INITIAL_FORM);
-    // } catch (err) {
-    //     console.error("Login error. ", err);
-    //     setMessage({ text: "An error occurred, please try again later.", type: "error" });
-    // } finally {
-    //     setLoading(false);
-    // }
+      if (result?.error) {
+        setMessage({ text: result.error, type: "error" });
+      } else {
+        setMessage({
+          text: "Login successful, redirecting...",
+          type: "success",
+        });
+        router.push("/dashboard");
+      }
+    } catch (error) {
+      setMessage({ text: "An unexpected error occurred.", type: "error" });
+      console.error("Login error", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -131,7 +136,7 @@ const Login = () => {
             disabled={loading}
           >
             {loading ? (
-              "Loging In..."
+              "Logging In..."
             ) : (
               <>
                 <LogInIcon className="w-5 h-5" /> Login

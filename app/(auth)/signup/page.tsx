@@ -1,6 +1,8 @@
 "use client";
 import { Mail, User, UserPlus, Lock, type LucideIcon } from "lucide-react";
 import { useState } from "react";
+import { authAdapter } from "@/lib/adapters/auth";
+import { useRouter } from "next/navigation";
 
 const INITIAL_FORM = { name: "", email: "", password: "" };
 
@@ -36,39 +38,30 @@ const SignUp = () => {
     { name: "password", type: "password", placeholder: "Password", icon: Lock },
   ];
 
+  const router = useRouter();
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     setMessage({ text: "", type: "" });
 
-    // try {
-    //     const { data } = await axios.post<AuthResponse>(`${API_URL}/api/user/register`, formData);
-    //     if ("token" in data) {
-    //         console.log("Signup Successfully", data);
-    //         setMessage({ text: "Registration successful!, redirecting...", type: "success" });
-    //         setFormData(INITIAL_FORM);
-    //         onSubmit({
-    //             token: data.token,
-    //             user: {
-    //                 ...data.user,
-    //                 avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(data.user?.name || "User")}&background=random`,
-    //             },
-    //         });
-    //     } else {
-    //         setMessage({
-    //             text: data.message || "An error occurred. Please try again later",
-    //             type: "error",
-    //         });
-    //     }
-    // } catch (err: any) {
-    //     console.error("Signup error", err);
-    //     setMessage({
-    //         text: err.response?.data?.message || "An error occurred. Please try again later",
-    //         type: "error",
-    //     });
-    // } finally {
-    //     setLoading(false);
-    // }
+    try {
+      await authAdapter.signup(formData);
+      setMessage({
+        text: "Registration successful! Redirecting to login...",
+        type: "success",
+      });
+      setFormData(INITIAL_FORM);
+      router.push("/login");
+    } catch (error) {
+      console.error("Signup error", error);
+      setMessage({
+        text: "An unexpected error occurred. Please try again later.",
+        type: "error",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
