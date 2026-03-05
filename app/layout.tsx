@@ -14,7 +14,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-dvh m-0">
       <body className={`antialiased h-dvh m-0`}>
-        <div className="h-full">{children}</div>
+        <div className="h-full bg-gradient-to-tl from-foreground to-sidebar">
+          {children}
+        </div>
       </body>
     </html>
   );

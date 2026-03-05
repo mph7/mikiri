@@ -1,5 +1,5 @@
 import type * as React from "react";
-import { Home, Settings } from "lucide-react";
+import { Home, LucideTarget, Settings } from "lucide-react";
 
 import {
   Sidebar,
@@ -11,7 +11,6 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarRail,
 } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
@@ -34,6 +33,11 @@ const data = {
         icon: Home,
         badge: null,
       },
+      {
+        title: "Goals",
+        url: `${URL}/goals`,
+        icon: LucideTarget,
+      },
     ],
   },
 };
@@ -45,11 +49,7 @@ export function AppSidebar({
   ...props
 }: React.ComponentProps<typeof Sidebar> & { session: Session }) {
   return (
-    <Sidebar
-      collapsible="icon"
-      className="border-r-4 border-gray-300 text-white"
-      {...props}
-    >
+    <Sidebar collapsible="icon" className="text-white" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -69,7 +69,6 @@ export function AppSidebar({
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
-
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>
@@ -93,7 +92,6 @@ export function AppSidebar({
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -123,7 +121,6 @@ export function AppSidebar({
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
-      <SidebarRail />
     </Sidebar>
   );
 }
