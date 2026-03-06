@@ -79,7 +79,8 @@ const SignUp = () => {
           </div>
           <h2 className="text-2xl font-bold text-gray-800">Create Account</h2>
           <p className="text-gray-500 text-sm mt-1">
-            Join Mikiri and start reading in Japanese
+            Join {process.env.NEXT_PUBLIC_APP_NAME} and start reading in
+            Japanese
           </p>
         </div>
 
