@@ -17,7 +17,24 @@ import Image from "next/image";
 
 const URL = "http://localhost:3000";
 
-const data = {
+type NavItem = {
+  title: string;
+  url: string;
+  icon: React.ComponentType<{ className?: string }>;
+  badge: null | string;
+};
+
+const data: {
+  user: {
+    name: string;
+    email: string;
+    level: string;
+    streak: number;
+  };
+  navigation: {
+    main: NavItem[];
+  };
+} = {
   user: {
     name: "田中さん",
     email: "tanaka@example.com",
@@ -37,6 +54,7 @@ const data = {
         title: "Goals",
         url: `${URL}/goals`,
         icon: LucideTarget,
+        badge: null,
       },
     ],
   },
