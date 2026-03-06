@@ -77,7 +77,9 @@ export function AppSidebar({
                   <Image src="/logo.png" alt="logo" width="150" height="150" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-yuji text-2xl">Mikiri</span>
+                  <span className="truncate font-yuji text-2xl">
+                    {process.env.NEXT_PUBLIC_APP_NAME}
+                  </span>
                   <span className="truncate text-xs text-white">
                     Japanese Learning
                   </span>
