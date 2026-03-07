@@ -15,7 +15,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 
-const URL = "http://localhost:3000";
+const URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 
 type NavItem = {
   title: string;
@@ -45,8 +45,8 @@ const data: {
   navigation: {
     main: [
       {
-        title: "Dashboard",
-        url: `${URL}/dashboard`,
+        title: "Home",
+        url: `${URL}/home`,
         icon: Home,
         badge: null,
       },

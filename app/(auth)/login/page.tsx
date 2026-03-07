@@ -46,7 +46,7 @@ const Login = () => {
           text: "Login successful, redirecting...",
           type: "success",
         });
-        router.push("/dashboard");
+        router.push("/home");
       }
     } catch (error) {
       setMessage({ text: "An unexpected error occurred.", type: "error" });

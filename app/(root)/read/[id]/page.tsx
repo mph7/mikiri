@@ -1,4 +1,4 @@
-import materials from "./../../dashboard/dummyMaterial";
+import materials from "@/app/(root)/home/dummyMaterial";
 import React from "react";
 import BackButton from "@/app/(root)/read/[id]/BackButton";
 
