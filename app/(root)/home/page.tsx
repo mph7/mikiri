@@ -24,7 +24,7 @@ export default function Dashboard() {
             backgroundSize: '200px 200px',
           }}
         />
-        <main className="flex-1 overflow-y-auto">
+        <main className="flex-1 overflow-y-auto w-full">
           <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-10 grid grid-cols-3 gap-6">
             {libraryItems.map((items) => (
               <MikiriCard key={items.id}>

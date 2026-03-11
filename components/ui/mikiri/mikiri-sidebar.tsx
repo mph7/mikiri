@@ -33,16 +33,16 @@ export function MikiriSidebar() {
       {/* Mobile overlay */}
       {open && (
         <div
-          className="fixed inset-0 z-40 bg-background/80 backdrop-blur-sm lg:hidden"
+          className="sticky inset-0 z-40 bg-background/80 backdrop-blur-sm lg:hidden"
           onClick={close}
         />
       )}
 
       <aside
         className={`
-          fixed top-0 left-0 z-50 flex h-100% max-h-dvh w-60 flex-col border-r border-border bg-sidebar
+          fixed lg:sticky top-0 left-0 z-50 flex h-100% max-h-dvh w-60 flex-col border-r border-border bg-sidebar
           transition-transform duration-300 ease-out
-          lg:relative lg:translate-x-0 bg-[#0E0E0E]
+          lg:translate-x-0 bg-[#0E0E0E]
           ${open ? "translate-x-0" : "-translate-x-full"}
         `}
       >
