@@ -22,7 +22,7 @@ export function MikiriSidebarItem({
     <button
       onClick={onClick}
       className={cn(
-        "flex w-full items-center gap-3 px-3 py-2.5 text-sm transition-all duration-200",
+        "flex w-full items-center gap-3 px-3 py-2.5 text-sm transition-all duration-200 cursor-pointer",
         "rounded-sm",
         active
           ? "bg-sakura/10 text-sakura border-l-[3px] border-sakura shadow-[inset_0_0_20px_rgba(249,168,212,0.1),-4px_0_16px_rgba(249,168,212,0.08)]"

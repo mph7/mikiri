@@ -6,21 +6,22 @@ import { usePathname } from "next/navigation";
 
 import {
   LayoutDashboard,
-  Library,
+  // Library,
   BarChart3,
   Target,
-  Settings,
+  // Settings,
   Flame,
   X,
 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 const navItems = [
   { icon: LayoutDashboard, label: "Home", id: "home" },
-  { icon: Library, label: "Library", id: "library", badge: "24" },
+  // { icon: Library, label: "Library", id: "library", badge: "24" },
   { icon: BarChart3, label: "Analytics", id: "analytics" },
-  { icon: Target, label: "Goals", id: "goals" },
-  { icon: Settings, label: "Settings", id: "settings" },
+  { icon: Target, label: "Goals", id: "goals", badge: '' },
+  // { icon: Settings, label: "Settings", id: "settings" },
 ];
 
 export function MikiriSidebar() {
@@ -66,13 +67,17 @@ export function MikiriSidebar() {
             Menu
           </p>
           {navItems.map((item) => (
-            <MikiriSidebarItem
+            <Link
+              href={`${process.env.NEXT_PUBLIC_APP_URL}/${item.id}`}
               key={item.id}
-              icon={item.icon}
-              label={item.label}
-              active={activeItem === item.id}
-              badge={item.badge}
-            />
+            >
+              <MikiriSidebarItem
+                icon={item.icon}
+                label={item.label}
+                active={activeItem === item.id}
+                badge={item.badge ? item.badge : ''}
+              />
+            </Link>
           ))}
         </nav>
         {/* User section */}
