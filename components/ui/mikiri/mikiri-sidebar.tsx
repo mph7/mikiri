@@ -18,7 +18,7 @@ import Link from "next/link";
 
 const navItems = [
   { icon: LayoutDashboard, label: "Home", id: "home" },
-  // { icon: Library, label: "Library", id: "library", badge: "24" },
+  { icon: Comic, label: "Library", id: "library", badge: "24" },
   { icon: BarChart3, label: "Analytics", id: "analytics" },
   { icon: Target, label: "Goals", id: "goals", badge: '' },
   // { icon: Settings, label: "Settings", id: "settings" },
