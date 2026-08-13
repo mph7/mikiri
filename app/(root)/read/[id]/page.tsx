@@ -7,6 +7,7 @@ type ReaderProps = {
   }>;
 };
 
+// TODO: revamp the reader for manga, probably on app/reader/[seriesId]/[volumeId]/page.tsx
 const Reader = async ({ params }: ReaderProps) => {
   const { } = await params;
 
