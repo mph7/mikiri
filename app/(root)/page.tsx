@@ -24,7 +24,7 @@ export default function Dashboard() {
           }}
         />
         <main className="flex-1 overflow-y-auto w-full">
-          <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mx-auto max-w-7xl grid grid-cols-2 gap-x-5 gap-y-10 px-4 py-10 sm:grid-cols-3 sm:px-6 md:grid-cols-4 lg:grid-cols-5 lg:px-10 xl:grid-cols-6">
             {mangaSeries.map((series) => (
               <MangaSeriesCard key={series.slug} series={series} />
             ))}
