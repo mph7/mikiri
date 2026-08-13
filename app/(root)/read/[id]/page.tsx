@@ -1,4 +1,3 @@
-import materials from "./../../dashboard/dummyMaterial";
 import React from "react";
 import BackButton from "@/app/(root)/read/[id]/BackButton";
 
@@ -9,13 +8,9 @@ type ReaderProps = {
 };
 
 const Reader = async ({ params }: ReaderProps) => {
-  const { id } = await params;
+  const { } = await params;
 
-  const currentMaterial = materials.find((material) => material.id === id);
-
-  if (!currentMaterial) {
-    return <div>Material not found</div>;
-  }
+  // const currentMaterial = materials.find((material) => material.id === id);
 
   return (
     <div className="p-8">
@@ -25,9 +20,9 @@ const Reader = async ({ params }: ReaderProps) => {
       </div>
 
       <h1 className="mb-8 text-2xl font-semibold font-mono">
-        {currentMaterial?.title}
+        {"test"}
       </h1>
-      <p className="font-medium text-lg">{currentMaterial?.content}</p>
+      <p className="font-medium text-lg">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint quisquam dolores aliquid ab veritatis reiciendis. Necessitatibus, quo. Animi, beatae. Suscipit beatae cum rem dolorem! Veniam omnis nihil numquam tenetur quo!</p>
     </div>
   );
 };

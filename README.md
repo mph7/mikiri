@@ -1,103 +1,165 @@
-# Mikiri (見切り) - Your Personal Space for Immersive Japanese Reading
+<div align="center">
 
-**Mikiri** helps you cut through the noise and dive deep into Japanese texts. Our vision is to create a powerful, personalizable, and privacy-respecting platform that empowers Japanese language learners to engage with authentic content on their own terms.
+# 見切り — Mikiri
 
-We believe in the power of immersion and "i+1" learning. Mikiri aims to be the best tool for you to read what _you_ want, how _you_ want, seamlessly integrating with your existing learning ecosystem.
+**A self-hosted Japanese immersion hub for serious learners.**
 
-## ✨ Current Stage: Foundational MVP - The Clean Reader
+[![Next.js](https://img.shields.io/badge/Next.js-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white)](https://www.prisma.io/)
+[![License](https://img.shields.io/badge/License-MIT-f9a8d4?style=for-the-badge)](LICENSE)
+[![Status](https://img.shields.io/badge/Status-Early%20Development-f9a8d4?style=for-the-badge)]()
 
-Mikiri is currently in its foundational **Minimum Viable Product (MVP)** stage. This version is laser-focused on providing a **clean, simple, and efficient text reading experience**.
+*One place to read. One place to track. One place to grow.*
 
-The core idea of this MVP is to give you a dedicated space to import Japanese texts (plain text for now) and read them in a distraction-free environment. We've intentionally kept it lean, allowing you to leverage your favorite browser-based dictionary extensions (like Yomichan/Rikaichan) for vocabulary lookups, which many dedicated learners already use and love.
+[What is Mikiri?](#-what-is-mikiri) · [Current State](#-current-state) · [Planned Modules](#-planned-modules) · [Getting Started](#-getting-started) · [Philosophy](#-philosophy)
 
-While the backend infrastructure supports user accounts and text storage, the primary user-facing experience in this MVP is centered on straightforward text import and reading.
+---
 
-## 🚀 Core MVP Features
+</div>
 
-- **👤 User Accounts:** Secure registration and login to keep your reading materials private and accessible.
-- **➕ Simple Text Import:** Easily paste or type in any Japanese text you want to read.
-- **📖 Clean Reading Interface:** A minimalist, aesthetically pleasing environment designed for optimal Japanese text legibility.
-    - Focus on clear font rendering.
-    - Uncluttered UI to maximize immersion.
-- **🎨 Basic Customization:**
-    - Adjust text size for comfortable reading.
-    - Switch between Light and Dark themes.
-- **🧩 Browser Extension Ready:** Designed to work smoothly with popular pop-up dictionary browser extensions. Mikiri provides the text; your extension provides the instant lookups.
-- **📚 Personal Text Library:** Save your imported texts with titles to build your own reading collection.
-    - View your saved texts in an organized grid layout on your dashboard.
-    - Easily access or delete texts.
+## 🌸 What is Mikiri?
+
+**見切り** (*mikiri*) — a martial arts term meaning *"to see through"*, to discern with precision.
+
+Serious Japanese learners don't use one tool. They juggle Anki, subtitle files, browser extensions, OCR tools, manga readers, and half a dozen bookmarks — none of them talking to each other. Mikiri's goal is to pull that into a single, self-hosted hub where your immersion data actually connects: what you've read, what you've watched, what words you already know, and how much of any given content you can understand right now.
+
+The reference point is what LingQ does — but open source, free, privacy-first, and built around the tools that Japanese learners actually use.
+
+> 🚧 Early-stage, active development. The UI and core screens exist. The modules are being built one at a time. This readme reflects what is real today and what's planned — nothing more.
+
+---
+
+## ✨ Current State
+
+| Feature | Status |
+|---|---|
+| Home dashboard with library cards | ✅ UI done |
+| Reader screen | ✅ UI done |
+| Authentication (NextAuth) | ✅ Working |
+| Design system (sakura dark theme) | ✅ Done |
+| Analytics page | 🔨 Structure only |
+| Backend (Prisma + DB) | 🔨 In progress |
+| Real data connected to UI | 🔨 In progress |
+
+---
+
+## 📦 Planned Modules
+
+Mikiri is being built as a collection of modules, each one adding a new content type to the hub. Every module shares the same vocabulary and tracking layer — so progress in manga counts alongside anime, which counts alongside reading.
+
+### 🖼️ Manga
+Local manga library connected to a folder on disk. No uploads, no cloud sync — the app reads directly from files on your machine.
+
+- Library view showing available series and volumes
+- Per-volume info: cover, chapter count, OCR status
+- Reader that opens processed HTML files generated by [Mokuro](https://github.com/kha-white/mokuro)
+- Future: easier download organization and in-app OCR processing
+
+**Current status:** File API spike done (browser ↔ local files access confirmed). Building from scratch.
+
+### 📖 Light Novel & Books
+Built-in reader with EPUB and PDF support. Reading progress connects to the vocabulary system.
+
+### 🎌 Anime
+Local video player with subtitle support. Auto-import subtitles from [Jimaku](https://jimaku.cc/).
+
+### 📺 YouTube
+Import transcripts and subtitles. Use them as reading material or to build vocabulary decks.
+
+### 🎙️ Podcast
+Track Spotify and YouTube as audio immersion sources. Listening time feeds into your immersion log.
+
+### 📝 Vocabulary & Mining
+Import what you already know from [Anki](https://apps.ankiweb.net/), [JPDB](https://jpdb.io/), or [Jiten](https://jiten.moe/). Coverage stats reflect your actual level. Mine new words with one click back into Anki.
+
+### 📊 Unified Immersion Tracker
+All modules feed into a single tracker. See your total immersion by day, week, and month — across every content type.
+
+---
 
 ## 🛠️ Tech Stack
 
-[![Core Technologies](https://skillicons.dev/icons?i=react,ts,nodejs,tailwind,vite,mongodb,express)](https://skillicons.dev)
+| Layer | Technology |
+|---|---|
+| Framework | [Next.js](https://nextjs.org/) (App Router) |
+| Language | TypeScript |
+| Styling | Tailwind CSS + custom design system |
+| Database | PostgreSQL via [Neon](https://neon.tech/) |
+| ORM | [Prisma](https://www.prisma.io/) |
+| Auth | [NextAuth.js](https://authjs.dev/) |
+| Package Manager | [pnpm](https://pnpm.io/) |
+| Deploy | [Vercel](https://vercel.com/) |
 
-Mikiri leverages a modern and robust technology stack:
+---
 
-- **Frontend:**
-    - **React 19 & TypeScript:** For a dynamic and type-safe user interface.
-    - **Vite:** As the build tool and development server.
-    - **Tailwind CSS (v4):** For utility-first styling.
-- **Backend:**
-    - **Node.js & Express.js with TypeScript:** Powering the server-side logic.
-    - **MongoDB:** For data persistence, managed with Mongoose and hosted on MongoDB Atlas.
-    - **Authentication:** Secured using JWT and Bcrypt for password hashing.
-- **Development & CI/CD:**
-    - **DeepSource:** For continuous integration and advanced static code analysis, helping maintain code quality and security.
+## 🚀 Getting Started
 
-## 🔮 Future Vision: Your Personal Content Hub & Learning Toolkit
+**Prerequisites:** Node.js 20+, pnpm 9+, a Postgres database (Neon free tier works)
 
-While the MVP is a simple reader, the long-term vision for Mikiri is ambitious, drawing inspiration from the idea of a **"Facilitator of User-Curated Content"**. We want to empower you to bring _your own_ content, in various formats, and use Mikiri's powerful tools to enhance your learning.
+```bash
+git clone https://github.com/mph7/mikiri.git
+cd mikiri
+pnpm install
+cp .env.example .env
+```
 
-Future enhancements we're excited about include:
+Edit `.env`:
 
-- **📚 ePub Importer:** Upload and read your legally acquired Japanese ePubs (Light Novels, books, etc.) directly within Mikiri, with chapter navigation and a great reading experience.
-- **🧠 Known Words & Coverage Analysis:**
-    - Allow users to import their list of known words (e.g., from a JSON file).
-    - Analyze user-uploaded texts to calculate vocabulary coverage ("i+1" insights).
-    - Visually highlight unknown words within the reader.
-    - Recommend texts from the user's _own library_ that are at their optimal learning level.
-- **🔗 Enhanced Content Integration:**
-    - RSS Feed aggregation for news and blogs.
-    - "Read-it-later" style functionality for web articles (respecting site TOS).
-- **✍️ Annotation & Note-Taking Tools:** Directly within your texts.
-- **🎧 Audio Integration:** Options for Text-to-Speech or even syncing user-provided audio with texts.
+```env
+DATABASE_URL="postgresql://..."
+NEXTAUTH_SECRET="your-secret"
+NEXTAUTH_URL="http://localhost:3000"
+```
 
-The core principle will always be **user agency and privacy**. Mikiri will provide the tools; _you_ provide the content you have the right to use.
+```bash
+npx prisma generate
+npx prisma migrate dev
+pnpm dev
+```
 
-## 🏁 Getting Started
+Open [http://localhost:3000](http://localhost:3000).
 
-To get Mikiri up and running on your local machine, follow these steps:
+---
 
-**Prerequisites:**
+## 🍵 Philosophy
 
-- Node.js (v18 or later recommended)
-- npm (comes with Node.js)
-- Git
+Your reading history is personal. Your vocabulary list is a map of how far you've come. That data belongs to you.
 
-1.  **Clone the Repository:**
+Mikiri runs on your hardware, stores data locally, and will always be free and open source. The goal is to reduce friction between you and the content — not to be another subscription you have to manage.
 
-    ```bash
-    git clone https://github.com/mph7/mikiri.git
-    cd mikiri
-    ```
+The aesthetic matters too. When you're reading for hours, the environment you read in makes a difference.
 
-2.  **Set up the Backend:**
+---
 
-    ```bash
-    cd backend
-    npm install
-    # Set up your .env file with DB_USERNAME, DB_PASSWORD, JWT_SECRET
-    npm start
-    ```
+## 🤝 Contributing
 
-    The backend server will start, typically on port 4000.
+Early days, but contributions are welcome. Areas where help is especially useful:
 
-3.  **Frontend:**
-    ```bash
-    cd frontend
-    npm install
-    npm run dev
-    ```
-    The frontend development server will start, usually on port 5173.
+- Japanese tokenization (kuromoji, MeCab)
+- EPUB parsing and rendering  
+- Mokuro HTML reader pipeline
+- AnkiConnect integration
 
-Let's make Japanese reading more accessible and enjoyable, together!
+```bash
+git checkout -b feat/your-feature
+git commit -m "feat: your change"
+git push origin feat/your-feature
+# open a PR describing what changed and why
+```
+
+---
+
+## 📜 License
+
+MIT — use it, fork it, host it, make it yours.
+
+---
+
+<div align="center">
+
+**見切り — To see through. To cut clean.**
+
+🌸
+
+</div>

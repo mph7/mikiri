@@ -1,0 +1,84 @@
+interface ContentItem {
+  id: number
+  title: string
+  description: string
+  coverage: number
+  progress: number
+  level: string
+  recommended?: boolean
+}
+
+export const libraryItems: ContentItem[] = [
+  {
+    id: 4,
+    title: "\u30b3\u30f3\u30d3\u30cb\u4eba\u9593",
+    description: "\u6751\u7530\u6c99\u8036\u9999\u306e\u82a5\u5ddd\u8cde\u53d7\u8cde\u4f5c\u3002\u30b3\u30f3\u30d3\u30cb\u3067\u50cd\u304f\u5973\u6027\u306e\u72ec\u7279\u306a\u4eba\u751f\u89b3\u3002",
+    coverage: 74,
+    progress: 89,
+    level: "N3",
+  },
+  {
+    id: 5,
+    title: "\u30ad\u30c3\u30c1\u30f3",
+    description: "\u5409\u672c\u3070\u306a\u306a\u306e\u4ee3\u8868\u4f5c\u3002\u53f0\u6240\u3068\u6599\u7406\u3092\u901a\u3058\u3066\u5931\u3063\u305f\u3082\u306e\u3092\u53d6\u308a\u623b\u3059\u7269\u8a9e\u3002",
+    coverage: 85,
+    progress: 100,
+    level: "N4",
+  },
+  {
+    id: 6,
+    title: "NHK\u30cb\u30e5\u30fc\u30b9\u30a6\u30a7\u30d6\u30a4\u30fc\u30b8\u30fc",
+    description: "NHK\u304c\u63d0\u4f9b\u3059\u308b\u3084\u3055\u3057\u3044\u65e5\u672c\u8a9e\u306e\u30cb\u30e5\u30fc\u30b9\u3002\u6bce\u65e5\u66f4\u65b0\u3055\u308c\u308b\u8a18\u4e8b\u3002",
+    coverage: 91,
+    progress: 45,
+    level: "N5",
+  },
+  {
+    id: 7,
+    title: "\u9b54\u6cd5\u5c11\u5973\u307e\u3069\u304b\u2606\u30de\u30ae\u30ab",
+    description: "\u5e7b\u60f3\u7684\u306a\u4e16\u754c\u89b3\u3068\u885d\u6483\u7684\u306a\u5c55\u958b\u304c\u7279\u5fb4\u306e\u4eba\u6c17\u30a2\u30cb\u30e1\u306e\u539f\u4f5c\u5c0f\u8aac\u3002",
+    coverage: 62,
+    progress: 23,
+    level: "N2",
+  },
+  {
+    id: 8,
+    title: "\u30ce\u30eb\u30a6\u30a7\u30a4\u306e\u68ee",
+    description: "\u6751\u4e0a\u6625\u6a39\u306e\u604b\u611b\u5c0f\u8aac\u3002\u9759\u304b\u306a\u8a9e\u308a\u53e3\u3067\u63cf\u304b\u308c\u308b\u9752\u6625\u306e\u7269\u8a9e\u3002",
+    coverage: 56,
+    progress: 67,
+    level: "N2",
+  },
+  {
+    id: 9,
+    title: "\u30ef\u30f3\u30d4\u30fc\u30b9 \u7b2c1\u5dfb",
+    description: "\u5c3e\u7530\u6804\u4e00\u90ce\u306e\u4f1d\u8aac\u7684\u6d77\u8cca\u6f2b\u753b\u3002\u30eb\u30d5\u30a3\u306e\u5192\u967a\u304c\u59cb\u307e\u308b\uff01",
+    coverage: 79,
+    progress: 100,
+    level: "N4",
+  },
+  {
+    id: 10,
+    title: "\u5929\u6c17\u306e\u5b50",
+    description: "\u65b0\u6d77\u8aa0\u306e\u3082\u3046\u4e00\u3064\u306e\u540d\u4f5c\u3002\u96e8\u3092\u6b62\u3081\u308b\u529b\u3092\u6301\u3064\u5c11\u5973\u3068\u306e\u51fa\u4f1a\u3044\u3002",
+    coverage: 70,
+    progress: 0,
+    level: "N3",
+  },
+  {
+    id: 11,
+    title: "\u30b9\u30e9\u30e0\u30c0\u30f3\u30af",
+    description: "\u4e95\u4e0a\u96c4\u5f66\u306e\u4f1d\u8aac\u7684\u30d0\u30b9\u30b1\u30c3\u30c8\u30dc\u30fc\u30eb\u6f2b\u753b\u3002\u71b1\u3044\u9752\u6625\u306e\u7269\u8a9e\u3002",
+    coverage: 83,
+    progress: 41,
+    level: "N4",
+  },
+  {
+    id: 12,
+    title: "\u65e5\u672c\u306e\u6614\u8a71",
+    description: "\u6843\u592a\u90ce\u3001\u304b\u3050\u3084\u59eb\u306a\u3069\u65e5\u672c\u306e\u53e4\u5178\u7684\u306a\u6c11\u8a71\u96c6\u3002\u521d\u5fc3\u8005\u306b\u6700\u9069\u3002",
+    coverage: 95,
+    progress: 78,
+    level: "N5",
+  },
+]

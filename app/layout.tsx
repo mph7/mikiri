@@ -12,11 +12,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-dvh m-0">
+    <html lang="en" className="h-dvh m-0 dark z-0">
       <body className={`antialiased h-dvh m-0`}>
-        <div className="h-full bg-gradient-to-tl from-foreground to-sidebar">
-          {children}
-        </div>
+        <div className="">{children}</div>
       </body>
     </html>
   );
