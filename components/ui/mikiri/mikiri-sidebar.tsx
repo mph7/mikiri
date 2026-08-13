@@ -6,10 +6,8 @@ import { usePathname } from "next/navigation";
 
 import {
   LayoutDashboard,
-  // Library,
-  BarChart3,
-  Target,
-  // Settings,
+  Library,
+  Settings,
   Flame,
   X,
 } from "lucide-react";
@@ -17,7 +15,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const navItems = [
-  { icon: LayoutDashboard, label: "Home", id: "home" },
+  { icon: LayoutDashboard, label: "Home", id: "home", badge: "string" },
   // { icon: Settings, label: "Settings", id: "settings" },
 ];
 
