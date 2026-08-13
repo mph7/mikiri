@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { BookOpen } from "lucide-react";
+import { BookOpen, Layers } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -10,7 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { MikiriBadge } from "@/components/ui/mikiri/mikiri-badge";
+import { LevelSeal } from "@/components/manga/level-seal";
 import type { MangaSeries } from "@/lib/manga";
 import { getStatusConfig } from "@/lib/manga-status";
 
@@ -26,24 +26,23 @@ export function MangaVolumesDialog({ series, open, onOpenChange }: MangaVolumesD
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[85vh] overflow-y-auto rounded-sm border-border bg-[#111111] p-0 sm:max-w-3xl">
-        <DialogHeader className="border-b border-border px-6 py-5">
-          <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-sakura/70">
-            <span className="font-serif text-sm normal-case tracking-normal">全巻</span>
-            <span>All volumes</span>
+        <DialogHeader className="flex-row items-start gap-4 border-b border-border px-6 py-5">
+          {series.level != null && <LevelSeal level={series.level} size="sm" className="mt-1" />}
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-sakura/70">
+              <Layers className="h-3 w-3" />
+              <span className="font-serif text-sm normal-case tracking-normal">全巻</span>
+              <span>All volumes</span>
+            </div>
+            <DialogTitle className="font-serif text-xl font-normal text-foreground">
+              {series.title}
+            </DialogTitle>
+            <DialogDescription className="flex flex-wrap items-center gap-2 pt-1">
+              <span>
+                {series.finishedVolumes} of {series.totalVolumes} volumes read
+              </span>
+            </DialogDescription>
           </div>
-          <DialogTitle className="font-serif text-xl font-normal text-foreground">
-            {series.title}
-          </DialogTitle>
-          <DialogDescription className="flex flex-wrap items-center gap-2 pt-1">
-            <span>
-              {series.finishedVolumes} of {series.totalVolumes} volumes read
-            </span>
-            {series.level != null && (
-              <MikiriBadge className="bg-[#243129] ring-2 ring-[#86EFAC44] text-mikiri-success shadow-[0px_0px_15px_0px_#86EFAC77]">
-                N{series.level}
-              </MikiriBadge>
-            )}
-          </DialogDescription>
         </DialogHeader>
 
         <div className="grid grid-cols-2 gap-4 p-6 sm:grid-cols-3 md:grid-cols-4">
