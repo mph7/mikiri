@@ -2,164 +2,106 @@
 
 # 見切り — Mikiri
 
-**A self-hosted Japanese immersion hub for serious learners.**
+### A local manga reader built for Japanese immersion learners.
 
-[![Next.js](https://img.shields.io/badge/Next.js-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white)](https://www.prisma.io/)
-[![License](https://img.shields.io/badge/License-MIT-f9a8d4?style=for-the-badge)](LICENSE)
-[![Status](https://img.shields.io/badge/Status-Early%20Development-f9a8d4?style=for-the-badge)]()
+[![Status](https://img.shields.io/badge/status-early%20development-orange)](#roadmap)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+[![Made with Go](https://img.shields.io/badge/bridge-Go-00ADD8)](#tech-stack)
+[![Made with Next.js](https://img.shields.io/badge/web%20app-Next.js-black)](#tech-stack)
 
-*One place to read. One place to track. One place to grow.*
-
-[What is Mikiri?](#-what-is-mikiri) · [Current State](#-current-state) · [Planned Modules](#-planned-modules) · [Getting Started](#-getting-started) · [Philosophy](#-philosophy)
-
----
+[What it does](#what-it-does) • [How it works](#how-it-works) • [Roadmap](#roadmap) • [Tech stack](#tech-stack) • [Getting started](#getting-started)
 
 </div>
 
-## 🌸 What is Mikiri?
+<br>
 
-**見切り** (*mikiri*) — a martial arts term meaning *"to see through"*, to discern with precision.
+## What it does
 
-Serious Japanese learners don't use one tool. They juggle Anki, subtitle files, browser extensions, OCR tools, manga readers, and half a dozen bookmarks — none of them talking to each other. Mikiri's goal is to pull that into a single, self-hosted hub where your immersion data actually connects: what you've read, what you've watched, what words you already know, and how much of any given content you can understand right now.
+Mikiri reads manga from a folder on your own computer and serves it in your browser — with **Yomitan, Jiten, and every other dictionary extension working exactly like they do on any other web page.**
 
-The reference point is what LingQ does — but open source, free, privacy-first, and built around the tools that Japanese learners actually use.
+That last part is the whole point. Most local manga readers render pages as images, which means the text on them can't be selected, looked up, or read by an extension. Mikiri renders OCR'd manga text as real, selectable text in the page — so the tools you already use for immersion just work, with zero setup on either end.
 
-> 🚧 Early-stage, active development. The UI and core screens exist. The modules are being built one at a time. This readme reflects what is real today and what's planned — nothing more.
+No file uploads. No cloud account. Nothing leaves your computer.
 
----
+<br>
 
-## ✨ Current State
+## How it works
 
-| Feature | Status |
-|---|---|
-| Home dashboard with library cards | ✅ UI done |
-| Reader screen | ✅ UI done |
-| Authentication (NextAuth) | ✅ Working |
-| Design system (sakura dark theme) | ✅ Done |
-| Analytics page | 🔨 Structure only |
-| Backend (Prisma + DB) | 🔨 In progress |
-| Real data connected to UI | 🔨 In progress |
+Mikiri is two small pieces that run on the same machine:
 
----
+```
+┌──────────────────┐        ┌──────────────────┐        ┌──────────────────┐
+│   Your manga      │  scan │   Mikiri Bridge   │  HTTP  │   Mikiri (web)    │
+│   folder          │ ────▶│   (Go, no GUI)    │ ◀────▶ │   Next.js app     │
+│                   │        │                   │        │                   │
+│   Series/Volume/  │        │   serves your     │  local │   library grid    │
+│     *.mokuro      │        │   library over    │  host  │   + reader        │
+│     page images   │        │   localhost       │        │                   │
+└──────────────────┘        └──────────────────┘        └──────────────────┘
+```
 
-## 📦 Planned Modules
+- **Mikiri Bridge** — a tiny background process. Point it at a folder once. It serves your library over `localhost` and does nothing else. No window, no account, no config beyond a file path.
+- **Mikiri (web app)** — the library and reader, running entirely in your browser. It only ever talks to the Bridge on your own machine, whether you're running the app locally or using the hosted version.
 
-Mikiri is being built as a collection of modules, each one adding a new content type to the hub. Every module shares the same vocabulary and tracking layer — so progress in manga counts alongside anime, which counts alongside reading.
+Because the Bridge and the browser only need to be on the same computer, your manga never has to touch a server anywhere — including Mikiri's own.
 
-### 🖼️ Manga
-Local manga library connected to a folder on disk. No uploads, no cloud sync — the app reads directly from files on your machine.
+<br>
 
-- Library view showing available series and volumes
-- Per-volume info: cover, chapter count, OCR status
-- Reader that opens processed HTML files generated by [Mokuro](https://github.com/kha-white/mokuro)
-- Future: easier download organization and in-app OCR processing
+## Roadmap
 
-**Current status:** File API spike done (browser ↔ local files access confirmed). Building from scratch.
+Mikiri is being built in a specific order, on purpose: prove the hardest and most important part first, then build outward from it.
 
-### 📖 Light Novel & Books
-Built-in reader with EPUB and PDF support. Reading progress connects to the vocabulary system.
+- [ ] **Bridge** — scans a folder, serves it over `localhost`
+- [ ] **Library** — grid view with covers, series grouping, reading status
+- [ ] **Reader** — renders manga pages with a real DOM text overlay
+- [ ] **Extension compatibility** — verified working with Yomitan / Jiten
+- [ ] **Reading experience** — RTL, dual-page spreads, zoom, keyboard navigation
+- [ ] **Progress** — auto-saved, resumable per volume
 
-### 🎌 Anime
-Local video player with subtitle support. Auto-import subtitles from [Jimaku](https://jimaku.cc/).
+Once manga is genuinely finished, not before, the same approach is meant to extend to:
 
-### 📺 YouTube
-Import transcripts and subtitles. Use them as reading material or to build vocabulary decks.
+- Light novels & EPUBs
+- Optional cloud sync for reading across devices
 
-### 🎙️ Podcast
-Track Spotify and YouTube as audio immersion sources. Listening time feeds into your immersion log.
+This checklist is the actual build order, not a feature wishlist — it updates as milestones land.
 
-### 📝 Vocabulary & Mining
-Import what you already know from [Anki](https://apps.ankiweb.net/), [JPDB](https://jpdb.io/), or [Jiten](https://jiten.moe/). Coverage stats reflect your actual level. Mine new words with one click back into Anki.
+<br>
 
-### 📊 Unified Immersion Tracker
-All modules feed into a single tracker. See your total immersion by day, week, and month — across every content type.
+## Tech stack
 
----
+| Piece | Stack | Why |
+|---|---|---|
+| **Bridge** | Go | Single static binary, no runtime to install, trivial cross-platform builds |
+| **Web app** | Next.js (App Router) + TypeScript + Tailwind | The whole UI, running in your browser |
+| **Manga format** | [`.mokuro`](https://github.com/kha-white/mokuro) | OCR'd text blocks + page images, not the deprecated Mokuro HTML output |
+| **Storage** | Local SQLite (owned by the Bridge) | Library and progress live on your machine — nothing remote by default |
 
-## 🛠️ Tech Stack
+<br>
 
-| Layer | Technology |
-|---|---|
-| Framework | [Next.js](https://nextjs.org/) (App Router) |
-| Language | TypeScript |
-| Styling | Tailwind CSS + custom design system |
-| Database | PostgreSQL via [Neon](https://neon.tech/) |
-| ORM | [Prisma](https://www.prisma.io/) |
-| Auth | [NextAuth.js](https://authjs.dev/) |
-| Package Manager | [pnpm](https://pnpm.io/) |
-| Deploy | [Vercel](https://vercel.com/) |
+## Getting started
 
----
-
-## 🚀 Getting Started
-
-**Prerequisites:** Node.js 20+, pnpm 9+, a Postgres database (Neon free tier works)
+> Early development. Full setup instructions land with the first working milestone — for now, this is the shape of it.
 
 ```bash
 git clone https://github.com/mph7/mikiri.git
 cd mikiri
-pnpm install
-cp .env.example .env
+git checkout manga-mvp
 ```
 
-Edit `.env`:
+You'll need manga already processed into `.mokuro` files using [mokuro](https://github.com/kha-white/mokuro) before pointing Mikiri at a folder.
 
-```env
-DATABASE_URL="postgresql://..."
-NEXTAUTH_SECRET="your-secret"
-NEXTAUTH_URL="http://localhost:3000"
-```
+<br>
 
-```bash
-npx prisma generate
-npx prisma migrate dev
-pnpm dev
-```
+## Philosophy
 
-Open [http://localhost:3000](http://localhost:3000).
+- **Local-first.** Your files stay on your machine. No login required to read.
+- **Extension-native.** If it works on a normal web page, it works in Mikiri.
+- **Finished beats big.** One format, done properly, before the next one starts.
 
----
-
-## 🍵 Philosophy
-
-Your reading history is personal. Your vocabulary list is a map of how far you've come. That data belongs to you.
-
-Mikiri runs on your hardware, stores data locally, and will always be free and open source. The goal is to reduce friction between you and the content — not to be another subscription you have to manage.
-
-The aesthetic matters too. When you're reading for hours, the environment you read in makes a difference.
-
----
-
-## 🤝 Contributing
-
-Early days, but contributions are welcome. Areas where help is especially useful:
-
-- Japanese tokenization (kuromoji, MeCab)
-- EPUB parsing and rendering  
-- Mokuro HTML reader pipeline
-- AnkiConnect integration
-
-```bash
-git checkout -b feat/your-feature
-git commit -m "feat: your change"
-git push origin feat/your-feature
-# open a PR describing what changed and why
-```
-
----
-
-## 📜 License
-
-MIT — use it, fork it, host it, make it yours.
+<br>
 
 ---
 
 <div align="center">
-
-**見切り — To see through. To cut clean.**
-
-🌸
-
+<sub>MIT licensed · Built for people who read a lot of manga in a language they're still learning</sub>
 </div>
